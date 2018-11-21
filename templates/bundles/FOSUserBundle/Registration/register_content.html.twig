@@ -1,0 +1,32 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+    {{ form_widget(form) }}
+    <div>
+            <style>
+        footer{
+            position: absolute;
+        }
+        form{
+                margin: auto;
+                width: 400px;
+                left: 50%;
+        }
+        button:hover{
+            background-color: black!important;
+        }
+        button{
+            background-color: #00BC8A!important;
+        }
+
+        #_submit:hover{
+             background-color: black!important;
+        }
+        #_submit{
+                        background-color: #00BC8A!important;
+
+        }
+            </style> </br></br>
+        <input type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+{{ form_end(form) }}

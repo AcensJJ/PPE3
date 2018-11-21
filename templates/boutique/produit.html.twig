@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}index {{ controller_name }}!{% endblock %}
+
+{% block body %}
+
+
+<section id="two" class="wrapper style2 alt">
+				<div class="inner">
+	{% for produit in produit %}
+
+
+ <div class="spotlight">
+                                        <div class="image">
+                                             <img src="{{produit.image}}"  alt="" width="476" height="396.66"></div>
+         <div class="content"><h3>{{ produit.titre }}</h3>
+
+	<div >Prix : {{ produit.prix}} €</div>
+
+	{{produit.description | raw }}
+        </br>        </br>
+
+
+         <ul class="actions">
+                <li><a href="{#{{ path('blog',{'id': produit.id}) }}#}" class="button alt">Ajouter au panier</a></li>
+                <li><a href="{#{{ path('blog',{'id': produit.id}) }}#}" class="button alt" style="background-color: black!important;color: white!important;">Voir +</a></li>
+	</ul>
+       
+      
+
+
+         </div>
+ </div>
+{% endfor %}
+
+
+	</div>
+			</section>
+
+{% endblock %}
