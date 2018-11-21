@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProduitRepository")
@@ -24,7 +24,7 @@ class Produit
     private $titre;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255)
      */
     private $description;
 
@@ -38,7 +38,22 @@ class Produit
      */
     private $prix;
 
-  
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $stock;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="IdProduit")
+     */
+    private $paniers;
+
+    public function __construct()
+    {
+        $this->userId = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,5 +107,46 @@ class Produit
         return $this;
     }
 
+    public function getStock(): ?int
+    {
+        return $this->stock;
+    }
 
+    public function setStock(int $stock): self
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->setIdProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->contains($panier)) {
+            $this->paniers->removeElement($panier);
+            // set the owning side to null (unless already changed)
+            if ($panier->getIdProduit() === $this) {
+                $panier->setIdProduit(null);
+            }
+        }
+
+        return $this;
+    }
 }

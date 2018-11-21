@@ -16,7 +16,8 @@ class ProduitFixtures extends Fixture
          $produit->setTitre(" Voiture  n°$i")
                  ->setDescription("Audi R8 ")
                  ->setImage("https://cdn.pixabay.com/photo/2014/09/07/22/34/car-race-438467_960_720.jpg")
-                 ->setPrix("100000$i");
+                 ->setPrix("100000$i")
+                 ->setStock("100$i");            
 
          $manager->persist($produit);
 
