@@ -48,6 +48,11 @@ class Produit
      */
     private $paniers;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="produits")
+     */
+    private $categorieProduit;
+
     public function __construct()
     {
         $this->userId = new ArrayCollection();
@@ -146,6 +151,18 @@ class Produit
                 $panier->setIdProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategorieProduit(): ?Categorie
+    {
+        return $this->categorieProduit;
+    }
+
+    public function setCategorieProduit(?Categorie $categorieProduit): self
+    {
+        $this->categorieProduit = $categorieProduit;
 
         return $this;
     }
