@@ -20,18 +20,31 @@ class BoutiqueController extends AbstractController
         ]);
     }
 
- /**
+    /**
      * @Route("/produit", name="produit")
      */
-    public function article(){
+    public function produit(){
         $repo=$this->getDoctrine()->getRepository(Produit::class);
         $produit=$repo->findAll();
-        return $this->render('boutique/produit.html.twig',['controller_name'=> 'BoutiqueController','produit'=>$produit]);
+        return $this->render('boutique/produit.html.twig',[
+            'controller_name'=> 'Les artciles',
+            'produit'=>$produit,
+            ]);
 
 
     }
 
 
+    /**
+     * @Route("/article/{id}", name="article")
+     */
+    public function article(Produit $article){
+        return $this->render('boutique/article.html.twig',[
+            'controller_name'=> 'Un article',
+            'article'=>$article,
+            ]);
 
+
+    }
   
 }
