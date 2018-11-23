@@ -1,22 +1,140 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <style>
-        footer{
-            position: absolute;
-        }
-    </style>
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
 
-<section id="banner">
-				<div class="inner split">
-					<section>
-						<h2>Bienvenu sur ..., Site créer par ...</h2>
-					</section>
-					<section>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.elit, eget viverra nisi interdum vitae,Lorem ipsum dolor sit amet, consectetur adipiscing elit.elit, eget viverra nisi interdum vitae,Lorem ipsum dolor sit amet, consectetur adipiscing elit.elit, eget viverra nisi interdum vitaeLorem ipsum dolor sit amet, consectetur adipiscing elit.elit, eget viverra nisi interdum vitaeLorem ipsum dolor sit amet, consectetur adipiscing elit.elit, eget viverra nisi interdum vitae.</p>
-                                            <ul class="actions">
-							<li><a href="" class="button special">Voir nos article</a></li>
-						</ul>
-					</section>
+		<!-- Products -->
+
+		<div class="products">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 offset-lg-3">
+						<div class="section_title text-center">Populaire</div>
+					</div>
 				</div>
-			</section>
+			
+				<div class="row products_row">
+					
+					<!-- Product -->
+					<div class="col-xl-4 col-md-6">
+						<div class="product">
+							<div class="product_image"><img src="{{ asset('assets/images/product_1.jpg') }}" alt=""></div>
+							<div class="product_content">
+								<div class="product_info d-flex flex-row align-items-start justify-content-start">
+									<div>
+										<div>
+											<div class="product_name"><a href="product.html">Cool Clothing with Brown Stripes</a></div>
+											<div class="product_category">In <a href="category.html">Category</a></div>
+										</div>
+									</div>
+									<div class="ml-auto text-right">
+										<div class="rating_r rating_r_4 home_item_rating"><i></i><i></i><i></i><i></i><i></i></div>
+										<div class="product_price text-right">$3<span>.99</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Product -->
+					<div class="col-xl-4 col-md-6">
+						<div class="product">
+							<div class="product_image"><img src="{{ asset('assets/images/product_2.jpg') }}" alt=""></div>
+							<div class="product_content">
+								<div class="product_info d-flex flex-row align-items-start justify-content-start">
+									<div>
+										<div>
+											<div class="product_name"><a href="product.html">Cool Clothing with Brown Stripes</a></div>
+											<div class="product_category">In <a href="category.html">Category</a></div>
+										</div>
+									</div>
+									<div class="ml-auto text-right">
+										<div class="rating_r rating_r_4 home_item_rating"><i></i><i></i><i></i><i></i><i></i></div>
+										<div class="product_price text-right">$3<span>.99</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Product -->
+					<div class="col-xl-4 col-md-6">
+						<div class="product">
+							<div class="product_image"><img src="{{ asset('assets/images/product_6.jpg') }}" alt=""></div>
+							<div class="product_content">
+								<div class="product_info d-flex flex-row align-items-start justify-content-start">
+									<div>
+										<div>
+											<div class="product_name"><a href="product.html">Cool Clothing with Brown Stripes</a></div>
+											<div class="product_category">In <a href="category.html">Category</a></div>
+										</div>
+									</div>
+									<div class="ml-auto text-right">
+										<div class="rating_r rating_r_4 home_item_rating"><i></i><i></i><i></i><i></i><i></i></div>
+										<div class="product_price text-right">$3<span>.99</span></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="row load_more_row">
+					<div class="col">
+						<div class="button load_more ml-auto mr-auto"><a href="{{ path('produit')}}">Voir Tout</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Features -->
+
+		<div class="features">
+			<div class="container">
+				<div class="row">
+					
+					<!-- Feature -->
+					<div class="col-lg-4 feature_col">
+						<div class="feature d-flex flex-row align-items-start justify-content-start">
+							<div class="feature_left">
+								<div class="feature_icon"><img src="{{ asset('assets/images/icon_1.svg') }}" alt=""></div>
+							</div>
+							<div class="feature_right d-flex flex-column align-items-start justify-content-center">
+								<div class="feature_title">Fast Secure Payments</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Feature -->
+					<div class="col-lg-4 feature_col">
+						<div class="feature d-flex flex-row align-items-start justify-content-start">
+							<div class="feature_left">
+								<div class="feature_icon ml-auto mr-auto"><img src="{{ asset('assets/images/icon_2.svg') }}" alt=""></div>
+							</div>
+							<div class="feature_right d-flex flex-column align-items-start justify-content-center">
+								<div class="feature_title">Premium Products</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Feature -->
+					<div class="col-lg-4 feature_col">
+						<div class="feature d-flex flex-row align-items-start justify-content-start">
+							<div class="feature_left">
+								<div class="feature_icon"><img src="{{ asset('assets/images/icon_3.svg') }}" alt=""></div>
+							</div>
+							<div class="feature_right d-flex flex-column align-items-start justify-content-center">
+								<div class="feature_title">Free Delivery</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+		
+</div>
     {% endblock %}
