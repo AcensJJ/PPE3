@@ -55,7 +55,7 @@
               
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li> Connecté en tant que {{ app.user.username }}</li>
-            <li> <a href="{{ path('fos_user_profil') }}">Profil</a></li>
+            <li> <a href="">Profil</a></li>
             <li> <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             <li><a><i class='fas fa-shopping-cart' style='font-size:36px'></i></a></li>
             {% else %}

@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
 
         $user->setUsername('admin')
              ->setEmail('admin@admin.fr')
+             ->setEnabled('1')
              ->setRoles(array('ROLE_ADMIN'));
         $password = $this->encoder->encodePassword($user, 'admin');
         $user->setPassword($password);
@@ -31,6 +32,7 @@ class UserFixtures extends Fixture
         $user = new User();
 
         $user->setUsername('user')
+            ->setEnabled('1')
              ->setEmail('user@user.fr');
         $password = $this->encoder->encodePassword($user, 'user');
         $user->setPassword($password);
