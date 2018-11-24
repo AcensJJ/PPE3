@@ -1,32 +1,32 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-    {{ form_widget(form) }}
-    <div>
-            <style>
-        footer{
-            position: absolute;
-        }
-        form{
-                margin: auto;
-                width: 400px;
-                left: 50%;
-        }
-        button:hover{
-            background-color: black!important;
-        }
-        button{
-            background-color: #00BC8A!important;
-        }
+{% extends 'base.html.twig' %}
+{% block body %}
+{% trans_default_domain 'FOSUserBundle' %}
 
-        #_submit:hover{
-             background-color: black!important;
-        }
-        #_submit{
-                        background-color: #00BC8A!important;
 
-        }
-            </style> </br></br>
-        <input type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" />
+<div class="products ">
+
+    <div class="container ui centered grid">
+        <div class="row">
+            <div class="col-xl-6">
+
+                <div class="html ui top attached segment">
+                    <div class="field">
+                        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register ui form'}}) }}
+                        {{ form_widget(form) }}
+                    </div>
+                    <div class="ui checkbox">
+                    </div>
+                    <div> 
+                        <input class="ui button" type="submit" id="_submit" value="{{ 'registration.submit'|trans }}" />
+                    </div>
+                {{ form_end(form) }}
+                </div>
+		  
+            </div>
+        </div>
     </div>
-{{ form_end(form) }}
+</div>
+
+{% endblock %}
