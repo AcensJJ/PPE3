@@ -980,7 +980,6 @@ section
 }
 .product_info
 {
-	height: 101px;
 	padding-left: 25px;
 	padding-right: 25px;
 	padding-top: 18px;
@@ -1122,6 +1121,7 @@ section
 .product_buttons > div > div:first-of-type
 {
 	border-right: solid 1px #ededed;
+	border-left: solid 1px #ededed;
 }
 .home_item_large .product_buttons > div > div:first-of-type
 {

@@ -1,5 +1,85 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-{{dump(article)}}
-{{dump(article)}}
+
+<div class="super_container">
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+
+		
+		<!-- Product -->
+
+		<div class="product">
+			<div class="container">
+				<div class="row">
+					
+					<!-- Product Image -->
+					<div class="col-lg-6">
+						<div class="product_image_slider_container">
+							<div id="slider" class="flexslider">
+								<img src="{{article.image}}" alt="" width="500" height="500"/>		
+							</div>
+						</div>
+					</div>
+
+					<!-- Product Info -->
+					<div class="col-lg-6 product_col">
+						<div class="product_info">
+							<div class="product_name">{{ article.titre }}</div>
+							<div class="product_category">In <a href="category.html">Category</a></div>
+							<div class="product_rating_container d-flex flex-row align-items-center justify-content-start">
+								<div class="rating_r rating_r_4 product_rating"><i></i><i></i><i></i><i></i><i></i></div>
+								<div class="product_reviews_link"><a href="#">Reviews</a></div>
+							</div>
+							<div class="product_price"><span>{{ article.prix}} €</span></div>
+							<div class="product_size">
+								<div class="product_size_title">Select Size</div>
+								<ul class="d-flex flex-row align-items-start justify-content-start">
+									<li>
+										<input type="radio" id="radio_1" name="product_radio" class="regular_radio radio_1">
+										<label for="radio_1">XS</label>
+									</li>
+									<li>
+										<input type="radio" id="radio_2" name="product_radio" class="regular_radio radio_2" checked>
+										<label for="radio_2">S</label>
+									</li>
+									<li>
+										<input type="radio" id="radio_3" name="product_radio" class="regular_radio radio_3">
+										<label for="radio_3">M</label>
+									</li>
+									<li>
+										<input type="radio" id="radio_4" name="product_radio" class="regular_radio radio_4">
+										<label for="radio_4">L</label>
+									</li>
+									<li>
+										<input type="radio" id="radio_5" name="product_radio" class="regular_radio radio_5">
+										<label for="radio_5">XL</label>
+									</li>
+									<li>
+										<input type="radio" id="radio_6" name="product_radio" class="regular_radio radio_6">
+										<label for="radio_6">XXL</label>
+									</li>
+								</ul>
+							</div>
+							<div class="product_text">
+								<p>{{ article.description | raw }}</p>
+							</div>
+							<div class="product_buttons">
+								<div class="text-right d-flex flex-row align-items-start justify-content-start">
+									<div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
+										<i class='fas fa-cart-arrow-down' style='font-size:36px'></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+		
+</div>
 {% endblock %}

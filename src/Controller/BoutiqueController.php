@@ -18,6 +18,7 @@ class BoutiqueController extends AbstractController
             'controller_name' => 'BoutiqueController',
             
         ]);
+        
     }
 
     /**
@@ -27,10 +28,9 @@ class BoutiqueController extends AbstractController
         $repo=$this->getDoctrine()->getRepository(Produit::class);
         $produit=$repo->findAll();
         return $this->render('boutique/produit.html.twig',[
-            'controller_name'=> 'Les artciles',
+            'controller_name'=> 'Les articles',
             'produit'=>$produit,
             ]);
-
 
     }
 
