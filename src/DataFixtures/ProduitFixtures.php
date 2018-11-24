@@ -14,7 +14,7 @@ class ProduitFixtures extends Fixture
       for($i=1;$i<=6 ;$i++){
         $produit=new Produit;
 
-        $cate = $this->getReference('Pull');
+        $cate = $this->getReference('Tshirt');
 
         $produit->setTitre("T-shirt Collection n°$i")
                  ->setDescription("Edition Speciale")

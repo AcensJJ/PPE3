@@ -58,28 +58,27 @@
                                                         
                                         <div class="col-xl-4 col-md-6 grid-item hot">
                                                 <div class="product">
-                                                        <div class="product_image"><img src="{{produit.image}}" alt="" width="350" height="350"></div>
+                                                        <div class="product_image"><img src="{{ produit.image }}" alt="" width="350" height="350"></div>
                                                         <div class="product_content">
                                                                 <div class="product_info d-flex flex-row align-items-start justify-content-start">
                                                                         <div>
                                                                                <div>
-                                                                                       <div class="product_name"><a href="product.html">{{ produit.titre }}</a></div>
-                                                                                       <div class="product_category">Dans <a href="category.html">---</a></div>
+                                                                                       <div class="product_name"><a href="{{ path('article',{'id': produit.id}) }}">{{ produit.titre }}</a></div>
 										       <div class="product_category" style="color: black;">{{ produit.description | raw }}</div>
                                                                                </div>
                                                                         </div>
                                                                 	<div class="ml-auto text-right">
                                                                         	<div class="rating_r rating_r_4 home_item_rating"><i></i><i></i><i></i><i></i><i></i></div>
-                                                                        	<div class="product_price text-right"><span>{{ produit.prix}} €</span></div>
+                                                                        	<div class="product_price text-right"><span>{{ produit.prix }} €</span></div>
                                                                         </div>
                                                                 </div>
                                                                 <div class="product_buttons">
                                                                         <div class="text-right d-flex flex-row align-items-start justify-content-start">
                                                                                 <div class="product_button product_fav text-center d-flex flex-column align-items-center justify-content-center">
-                                                                                        <div><a href="{#{{ path('blog',{'id': produit.id}) }}#}">Voir +</a></div>
+                                                                                        <div><a href="{{ path('article',{'id': produit.id}) }}">Voir +</a></div>
                                                                                 </div>
                                                                                 <div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
-                                                                                        <div><a href="{#{{ path('blog',{'id': produit.id}) }}#}">Ajouter au panier</a></div>
+                                                                                        <div><a href="{#{{ path('article',{'id': produit.id}) }}#}">Ajouter au panier</a></div>
                                                                                 </div>
                                                                         </div>
                                                                 </div>

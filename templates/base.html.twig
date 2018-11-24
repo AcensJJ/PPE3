@@ -18,6 +18,7 @@
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/product.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/product_responsive.css') }}">
       <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+      <link rel="stylesheet" type="text/css" href="{{ asset('assets/semantic/semantic.min.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -54,13 +55,13 @@
               
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li> Connecté en tant que {{ app.user.username }}</li>
-                      
+            <li> <a href="{{ path('fos_user_profil') }}">Profil</a></li>
             <li> <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+            <li><a><i class='fas fa-shopping-cart' style='font-size:36px'></i></a></li>
             {% else %}
             <li><a href="/register">Inscription</a></li>
             <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
             {% endif %}
-            <li><a><i class='fas fa-shopping-cart' style='font-size:36px'></i></a></li>
           </ul>
         </nav>
       </div>
@@ -160,6 +161,11 @@
       <script src="{{ asset('assets/js/category.js') }}"></script>
       <script src="{{ asset('assets/plugins/flexslider/jquery.flexslider-min.js') }}"></script>
       <script src="{{ asset('assets/js/product.js') }}"></script>
+      <script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+      <script src="{{ asset('assets/semantic/semantic.min.js') }}"></script>
 
 
         {% endblock %}
