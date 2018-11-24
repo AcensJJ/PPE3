@@ -10,31 +10,37 @@ class CategorieFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $categorie = new Categorie();
+        $Tshirt = new Categorie();
 
-        $categorie->setLibelle('T-shirt');
-        $manager->persist($categorie);
+        $Tshirt->setLibelle('T-shirt');
+        $manager->persist($Tshirt);
 
-        $categorie = new Categorie();
+        $Pull = new Categorie();
 
-        $categorie->setLibelle('Pull');
-        $manager->persist($categorie);
+        $Pull->setLibelle('Pull');
+        $manager->persist($Pull);
 
-        $categorie = new Categorie();
+        $Veste = new Categorie();
 
-        $categorie->setLibelle('Veste');
-        $manager->persist($categorie);
+        $Veste->setLibelle('Veste');
+        $manager->persist($Veste);
 
-        $categorie = new Categorie();
+        $Pantalon = new Categorie();
 
-        $categorie->setLibelle('Pantalon');
-        $manager->persist($categorie);
+        $Pantalon->setLibelle('Pantalon');
+        $manager->persist($Pantalon);
 
-        $categorie = new Categorie();
+        $Short = new Categorie();
 
-        $categorie->setLibelle('Short');
-        $manager->persist($categorie);
+        $Short->setLibelle('Short');
+        $manager->persist($Short);
 
         $manager->flush();
+
+        $this->addReference('Tshirt', $Tshirt);
+        $this->addReference('Pull', $Pull);
+        $this->addReference('Veste', $Veste);
+        $this->addReference('Pantalon', $Pantalon);
+        $this->addReference('Short', $Short);
     }
 }
