@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="super_container">
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+		    <div class="product">
+
+
+		    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            
+            <div class="html ui top attached segment">
+                <table class="ui celled table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nom</th>
+                            <th>taille</th>
+                            <th>prix</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th colspan="4">
+                                <div class="ui right floated small primary labeled icon button">
+                                <i class="cart arrow down icon"></i> Commander
+                                </div>
+                                
+                            </th>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            {% else %}
+                <div class="container ui centered grid">
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <h1>Veuillez vous connecter</h1>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

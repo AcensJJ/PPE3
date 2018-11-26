@@ -56,7 +56,7 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <li> Connecté en tant que {{ app.user.username }}</li>
             <li> <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-            <li><a><i class='fas fa-shopping-cart' style='font-size:36px'></i></a></li>
+            <li><a href="{{ path('panier') }}"><i class='fas fa-shopping-cart' style='font-size:36px'></i></a></li>
             {% else %}
             <li><a href="/register">Inscription</a></li>
             <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
@@ -66,14 +66,13 @@
       </div>
     </header> 
 
-
-   {#     {{dump(app.user)}}#}
-        {% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 
 
 
-        {% block footer %}
-        <footer class="footer">
+    {% block footer %}
+
+    <footer class="footer">
 			<div class="footer_content">
 				<div class="container">
 					<div class="row">
@@ -136,38 +135,37 @@
 		</footer>
 
 		<!-- Scripts -->
-			<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
-			<script src="{{ asset('assets/js/skel.min.js') }}"></script>
-			<script src="{{ asset('assets/js/util.js') }}"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/skel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/util.js') }}"></script>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+    <script src="{{ asset('assets/styles/bootstrap-4.1.2/popper.js') }}"></script>
+    <script src="{{ asset('assets/styles/bootstrap-4.1.2/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/greensock/TweenMax.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/greensock/TimelineMax.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/greensock/animation.gsap.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
+    <script src="{{ asset('assets/plugins/easing/easing.js') }}"></script>
+    <script src="{{ asset('assets/plugins/progressbar/progressbar.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/parallax-js-master/parallax.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+    <script src="{{ asset('assets/plugins/Isotope/isotope.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/Isotope/fitcolumns.js') }}"></script>
+    <script src="{{ asset('assets/js/category.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flexslider/jquery.flexslider-min.js') }}"></script>
+    <script src="{{ asset('assets/js/product.js') }}"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/semantic/semantic.min.js') }}"></script>
 
-      <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
-      <script src="{{ asset('assets/styles/bootstrap-4.1.2/popper.js') }}"></script>
-      <script src="{{ asset('assets/styles/bootstrap-4.1.2/bootstrap.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/greensock/TweenMax.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/greensock/TimelineMax.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/scrollmagic/ScrollMagic.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/greensock/animation.gsap.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/greensock/ScrollToPlugin.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/OwlCarousel2-2.2.1/owl.carousel.js') }}"></script>
-      <script src="{{ asset('assets/plugins/easing/easing.js') }}"></script>
-      <script src="{{ asset('assets/plugins/progressbar/progressbar.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/parallax-js-master/parallax.min.js') }}"></script>
-      <script src="{{ asset('assets/js/custom.js') }}"></script>
-      <script src="{{ asset('assets/plugins/Isotope/isotope.pkgd.min.js') }}"></script>
-      <script src="{{ asset('assets/plugins/Isotope/fitcolumns.js') }}"></script>
-      <script src="{{ asset('assets/js/category.js') }}"></script>
-      <script src="{{ asset('assets/plugins/flexslider/jquery.flexslider-min.js') }}"></script>
-      <script src="{{ asset('assets/js/product.js') }}"></script>
-      <script
-        src="https://code.jquery.com/jquery-3.1.1.min.js"
-        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-        crossorigin="anonymous"></script>
-      <script src="{{ asset('assets/semantic/semantic.min.js') }}"></script>
 
-
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
     </body>
 </html>

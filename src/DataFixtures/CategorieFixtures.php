@@ -11,27 +11,22 @@ class CategorieFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $Tshirt = new Categorie();
-
         $Tshirt->setLibelle('T-shirt');
         $manager->persist($Tshirt);
 
         $Pull = new Categorie();
-
         $Pull->setLibelle('Pull');
         $manager->persist($Pull);
 
         $Veste = new Categorie();
-
         $Veste->setLibelle('Veste');
         $manager->persist($Veste);
 
         $Pantalon = new Categorie();
-
         $Pantalon->setLibelle('Pantalon');
         $manager->persist($Pantalon);
 
         $Short = new Categorie();
-
         $Short->setLibelle('Short');
         $manager->persist($Short);
 

@@ -21,8 +21,7 @@ class BoutiqueController extends AbstractController
         
         return $this->render('boutique/index.html.twig', [
             'controller_name' => 'BoutiqueController',
-            'produits' => $produits,
-            
+            'produits' => $produits, 
         ]);
         
     }
@@ -42,7 +41,6 @@ class BoutiqueController extends AbstractController
 
     }
 
-
     /**
      * @Route("/article/{id}", name="article")
      */
@@ -53,6 +51,16 @@ class BoutiqueController extends AbstractController
             'article' => $article,
             ]);
 
+    }
+
+    /**
+     * @Route("/panier", name="panier")
+     */
+    public function panier(){
+
+        return $this->render('boutique/panier.html.twig',[
+            'controller_name'=> 'Panier',
+            ]);
 
     }
   

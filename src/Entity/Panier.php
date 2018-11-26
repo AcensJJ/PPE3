@@ -26,11 +26,6 @@ class Panier
      */
     private $IDUser;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $panStock;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -56,18 +51,6 @@ class Panier
     public function setIDUser(?User $IDUser): self
     {
         $this->IDUser = $IDUser;
-
-        return $this;
-    }
-
-    public function getPanStock(): ?int
-    {
-        return $this->panStock;
-    }
-
-    public function setPanStock(int $panStock): self
-    {
-        $this->panStock = $panStock;
 
         return $this;
     }

@@ -22,6 +22,7 @@ protected $id;
  * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="IDUser")
  */
 private $paniers;
+
 public function __construct()
 {
 parent::__construct();
