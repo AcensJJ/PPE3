@@ -13,9 +13,15 @@ class BoutiqueController extends AbstractController
      */
     public function index()
     {
+        $repo=$this->getDoctrine()->getRepository(Produit::class);
+        $produits = $repo->createQueryBuilder('c')
+                            ->setMaxResults(3)
+                            ->getQuery()
+                            ->execute();
         
         return $this->render('boutique/index.html.twig', [
             'controller_name' => 'BoutiqueController',
+            'produits' => $produits,
             
         ]);
         
@@ -25,11 +31,13 @@ class BoutiqueController extends AbstractController
      * @Route("/produit", name="produit")
      */
     public function produit(){
+
         $repo=$this->getDoctrine()->getRepository(Produit::class);
         $produit=$repo->findAll();
+
         return $this->render('boutique/produit.html.twig',[
             'controller_name'=> 'Les articles',
-            'produit'=>$produit,
+            'produit' => $produit,
             ]);
 
     }
@@ -39,9 +47,10 @@ class BoutiqueController extends AbstractController
      * @Route("/article/{id}", name="article")
      */
     public function article(Produit $article){
+
         return $this->render('boutique/article.html.twig',[
             'controller_name'=> 'Un article',
-            'article'=>$article,
+            'article' => $article,
             ]);
 
 
