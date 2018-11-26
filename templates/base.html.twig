@@ -4,8 +4,11 @@
     <head>
       <meta charset="UTF-8" lang="fr-FR">
       <title>{% block title %}Boutique!{% endblock %}</title>
-      {#  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/flatly/bootstrap.min.css">  #}
+      <!-- Bootstrap -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/bootstrap-4.1.2/bootstrap.min.css') }}">
+      <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+      <link rel="stylesheet" type="text/css" href="{{ asset('assets/semantic/semantic.min.css') }}">
+      <!-- Template -->
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
@@ -17,8 +20,6 @@
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/flexslider/flexslider.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/product.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ asset('assets/styles/product_responsive.css') }}">
-      <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
-      <link rel="stylesheet" type="text/css" href="{{ asset('assets/semantic/semantic.min.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -36,7 +37,7 @@
         <div class="hamburger"><i class="fa fa-bars" aria-hidden="true"></i></div>
         <nav class="main_nav" id="main_nav">
           <ul class="d-flex flex-row align-items-start justify-content-start">
-            <li {#class="active"#}><a href="/">Acceuil</a></li>
+            <li><a href="/">Acceuil</a></li>
             <li><a href="{{ path('produit') }}">Nos produits</a></li>
           </ul>
         </nav>
@@ -138,9 +139,9 @@
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/skel.min.js') }}"></script>
     <script src="{{ asset('assets/js/util.js') }}"></script>
-    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
     <script src="{{ asset('assets/js/main.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
+    <!-- Template script -->
     <script src="{{ asset('assets/styles/bootstrap-4.1.2/popper.js') }}"></script>
     <script src="{{ asset('assets/styles/bootstrap-4.1.2/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/greensock/TweenMax.min.js') }}"></script>
@@ -158,12 +159,12 @@
     <script src="{{ asset('assets/js/category.js') }}"></script>
     <script src="{{ asset('assets/plugins/flexslider/jquery.flexslider-min.js') }}"></script>
     <script src="{{ asset('assets/js/product.js') }}"></script>
+    <!-- Semantic -->
     <script
       src="https://code.jquery.com/jquery-3.1.1.min.js"
       integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
       crossorigin="anonymous"></script>
     <script src="{{ asset('assets/semantic/semantic.min.js') }}"></script>
-
 
     {% endblock %}
     {% block javascripts %}{% endblock %}

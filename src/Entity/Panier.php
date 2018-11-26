@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,42 +18,64 @@ class Panier
      */
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Produit", inversedBy="paniers")
-     */
-    private $IdProduit;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="paniers")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="panier", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $IDUser;
+    private $user;
 
-    public function getId(): ?int
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Produit", mappedBy="panier")
+     */
+    private $articles;
+
+    public function __construct()
     {
-        return $this->id;
+        $this->articles = new ArrayCollection();
     }
 
-    public function getIdProduit(): ?Produit
+    public function getUser(): ?User
     {
-        return $this->IdProduit;
+        return $this->user;
     }
 
-    public function setIdProduit(?Produit $IdProduit): self
+    public function setUser(User $user): self
     {
-        $this->IdProduit = $IdProduit;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getIDUser(): ?User
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getArticles(): Collection
     {
-        return $this->IDUser;
+        return $this->articles;
     }
 
-    public function setIDUser(?User $IDUser): self
+    public function addArticle(Produit $article): self
     {
-        $this->IDUser = $IDUser;
+        if (!$this->articles->contains($article)) {
+            $this->articles[] = $article;
+            $article->setPanier($this);
+        }
 
         return $this;
     }
+
+    public function removeArticle(Produit $article): self
+    {
+        if ($this->articles->contains($article)) {
+            $this->articles->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getPanier() === $this) {
+                $article->setPanier(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

@@ -7,7 +7,7 @@
 		<div class="super_overlay"></div>
 		    <div class="product">
 
-
+            <!-- Si connecter afficher panier -->
 		    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             
             <div class="html ui top attached segment">
@@ -20,6 +20,7 @@
                             <th>prix</th>
                         </tr>
                     </thead>
+                    <!-- BDD afficher le panier -->
                     <tbody>
                         <tr>
                             <td>a</td>
@@ -41,6 +42,7 @@
                 </table>
             </div>
 
+            <!-- Si deconnecter , devoir se connecter --> 
             {% else %}
                 <div class="container ui centered grid">
                     <div class="row">

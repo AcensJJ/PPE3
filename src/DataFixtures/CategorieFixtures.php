@@ -32,6 +32,7 @@ class CategorieFixtures extends Fixture
 
         $manager->flush();
 
+        // reference pour acceder avec une autre fixture
         $this->addReference('Tshirt', $Tshirt);
         $this->addReference('Pull', $Pull);
         $this->addReference('Veste', $Veste);

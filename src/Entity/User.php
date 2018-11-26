@@ -19,9 +19,9 @@ class User extends BaseUser
 protected $id;
 
 /**
- * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="IDUser")
+ * @ORM\OneToOne(targetEntity="App\Entity\Panier", mappedBy="user", cascade={"persist", "remove"})
  */
-private $paniers;
+private $panier;
 
 public function __construct()
 {
@@ -30,32 +30,18 @@ $this->paniers = new ArrayCollection();
 // your own logic
 }
 
-/**
- * @return Collection|Panier[]
- */
-public function getPaniers(): Collection
+public function getPanier(): ?Panier
 {
-    return $this->paniers;
+    return $this->panier;
 }
 
-public function addPanier(Panier $panier): self
+public function setPanier(Panier $panier): self
 {
-    if (!$this->paniers->contains($panier)) {
-        $this->paniers[] = $panier;
-        $panier->setIDUser($this);
-    }
+    $this->panier = $panier;
 
-    return $this;
-}
-
-public function removePanier(Panier $panier): self
-{
-    if ($this->paniers->contains($panier)) {
-        $this->paniers->removeElement($panier);
-        // set the owning side to null (unless already changed)
-        if ($panier->getIDUser() === $this) {
-            $panier->setIDUser(null);
-        }
+    // set the owning side of the relation if necessary
+    if ($this !== $panier->getUser()) {
+        $panier->setUser($this);
     }
 
     return $this;

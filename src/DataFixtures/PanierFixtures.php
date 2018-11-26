@@ -15,17 +15,18 @@ class PanierFixtures extends Fixture  implements DependentFixtureInterface
     {
         $panier = new Panier();
         $user = $this->getReference('admin');
-        $panier->setIDUser($user);
+        $panier->setUser($user);
         $manager->persist($panier);
 
         $panier = new Panier();
         $user = $this->getReference('user');
-        $panier->setIDUser($user);
+        $panier->setUser($user);
         $manager->persist($panier);
 
         $manager->flush();
     }
 
+    // Doit charger le fichier avant celui ci, pour les reference
     public function getDependencies()
     {
         return array(

@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}Sell - {{ controller_name }}{% endblock %}
 {% block body %}
 
 <div class="super_container">
@@ -63,11 +64,11 @@
 							<div class="product_text">
 								<p>{{ article.description | raw }}</p>
 							</div>
-							<div class="product_buttons">
-								<div class="text-right d-flex flex-row align-items-start justify-content-start">
-									<div class="product_button product_cart text-center d-flex flex-column align-items-center justify-content-center">
-										<i class='fas fa-cart-arrow-down' style='font-size:36px'></i>
-									</div>
+							 <!-- <button type="button" >Ajouter panier</button> -->
+							<div class="ui vertical animated button" id="addPanier" tabindex="0">
+								<div class="hidden content">Shop</div>
+								<div class="visible content">
+									<i class="shop icon"></i>
 								</div>
 							</div>
 						</div>
@@ -81,4 +82,58 @@
 	</div>
 		
 </div>
+{% endblock %}
+{% block javascripts %}
+<script>
+	$(document).ready( function() {
+
+        //FUNCTION AJAX
+        function reqAjax(){
+            $.ajax({
+                async: true,
+                type: 'POST',
+                url: "{{ path('myarticle', {'id' : app.request.get('_route_params')['id']}) }}",
+                success: function (data) {
+                    if(data['response'] == "1"){
+                        $('#addPanier .content .icon').removeClass('shop').addClass('check circle');
+                        $('#addPanier .hidden.content').html('');
+                        $('#addPanier').removeClass('loading vertical animated').removeAttr("id");
+                        $(".cart-notif").html(data['newCountPanier'])
+                        //alert
+                        $.confirm({
+                            icon: 'fa fa-question-circle-o',
+                            theme: 'supervan',
+                            title: 'Article au panier !',
+                            closeIcon: false,
+                            content: 'Cet article a été correctement ajouté à votre panier',
+                            animation: 'scale',
+                            type: 'success',
+                            buttons: {
+                              Continuer: function () {
+                                return;
+                              },
+                              Commander: function () {
+                                window.location.replace("{{ path('panier') }}");
+                              }
+                            }
+                        });
+                        return 1;
+                    } else {
+                        $('#addPanier').removeClass('loading');
+                        alert('Il y a eu un problème ! -> '+data);
+                        return 0;
+                    }
+                },
+                complete : function(){
+                    // do
+                }
+            });
+        }
+
+        $('#addPanier').click(function(){
+                $(this).addClass('loading');
+                reqAjax();
+        });
+    });
+</script>
 {% endblock %}

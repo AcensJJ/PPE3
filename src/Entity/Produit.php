@@ -44,14 +44,14 @@ class Produit
     private $stock;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Panier", mappedBy="IdProduit")
-     */
-    private $paniers;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="produits")
      */
     private $categorieProduit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Panier", inversedBy="articles")
+     */
+    private $panier;
 
     public function __construct()
     {
@@ -124,37 +124,6 @@ class Produit
         return $this;
     }
 
-    /**
-     * @return Collection|Panier[]
-     */
-    public function getPaniers(): Collection
-    {
-        return $this->paniers;
-    }
-
-    public function addPanier(Panier $panier): self
-    {
-        if (!$this->paniers->contains($panier)) {
-            $this->paniers[] = $panier;
-            $panier->setIdProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removePanier(Panier $panier): self
-    {
-        if ($this->paniers->contains($panier)) {
-            $this->paniers->removeElement($panier);
-            // set the owning side to null (unless already changed)
-            if ($panier->getIdProduit() === $this) {
-                $panier->setIdProduit(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getCategorieProduit(): ?Categorie
     {
         return $this->categorieProduit;
@@ -163,6 +132,18 @@ class Produit
     public function setCategorieProduit(?Categorie $categorieProduit): self
     {
         $this->categorieProduit = $categorieProduit;
+
+        return $this;
+    }
+
+    public function getPanier(): ?Panier
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(?Panier $panier): self
+    {
+        $this->panier = $panier;
 
         return $this;
     }
