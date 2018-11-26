@@ -92,7 +92,7 @@
             $.ajax({
                 async: true,
                 type: 'POST',
-                url: "{{ path('myarticle', {'id' : app.request.get('_route_params')['id']}) }}",
+                url: "{{ path('article', {'id' : app.request.get('_route_params')['id']}) }}",
                 success: function (data) {
                     if(data['response'] == "1"){
                         $('#addPanier .content .icon').removeClass('shop').addClass('check circle');

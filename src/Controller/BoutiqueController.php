@@ -2,16 +2,16 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Produit;
 use App\Entity\User;
 use App\Entity\Panier;
+use App\Entity\Produit;
+use Doctrine\ORM\Query;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Doctrine\ORM\Query;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BoutiqueController extends AbstractController
 {
@@ -51,7 +51,20 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/article/{id}", name="article")
      */
-    public function article(Produit $article){
+    public function article(Produit $article, Request $request, UserInterface $user, ObjectManager $manager){
+
+        //IF AJAX ADD PANIER
+        if($request->isXmlHttpRequest()){
+            //SAVOIR SI L'ARTICLE EXISTE DEJA DANS LA COLLECTION DU PANIER DE L'USER
+            $thisCart = $user->getPanier();
+            $thisCart->addArticle($article);
+            $manager->persist($thisCart);
+            $manager->flush();
+            $newCountPanier = $thisCart->getArticles()->count();
+            
+            $response = new JsonResponse(array("response" => 1, "newCountPanier" => $newCountPanier));
+            return $response;
+        }
 
         return $this->render('boutique/article.html.twig',[
             'controller_name'=> 'Un article',
