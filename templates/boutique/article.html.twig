@@ -64,6 +64,7 @@
 							<div class="product_text">
 								<p>{{ article.description | raw }}</p>
 							</div>
+							{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
 							 <!-- <button type="button" >Ajouter panier</button> -->
 							<div class="ui vertical animated button" id="addPanier" tabindex="0">
 								<div class="hidden content">Shop</div>
@@ -71,6 +72,16 @@
 									<i class="shop icon"></i>
 								</div>
 							</div>
+							{% else %}
+							<a href="{{ path('fos_user_security_login') }}">
+								<div class="ui vertical animated button" tabindex="0">
+									<div class="hidden content">Shop</div>
+									<div class="visible content">
+										<i class="shop icon"></i>
+									</div>
+								</div>
+							</a>
+							{% endif %}
 						</div>
 					</div>
 

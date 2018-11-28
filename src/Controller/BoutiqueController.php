@@ -51,7 +51,7 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/article/{id}", name="article")
      */
-    public function article(Produit $article, Request $request, UserInterface $user, ObjectManager $manager){
+    public function article(Produit $article, Request $request, UserInterface $user = null, ObjectManager $manager){
 
         //IF AJAX ADD PANIER
         if($request->isXmlHttpRequest()){
