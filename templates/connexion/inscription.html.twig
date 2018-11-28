@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<div class="super_container">
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+
+        <div class="products ">
+
+            <div class="container ui centered grid">
+                <div class="row">
+                    <div class="col-xl-6">
+
+                        <div class="html ui top attached segment" style="margin-top: 1em;">
+                            <div class="field">
+                                {{ form_start(form, {'method': 'post', 'action': path('inscription'), 'attr': {'class': 'ui form'}}) }}
+                                {{ form_widget(form) }}
+                            </div>
+                            <div class="ui checkbox">
+                            </div>
+                            <div> 
+                                <input class="ui button" type="submit" id="_submit" value="Envoyer" />
+                            </div>
+                        {{ form_end(form) }}
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
