@@ -100,7 +100,6 @@ class BoutiqueController extends AbstractController
         }
 
         $thisPanier = $thisPanier->getArticles();
-        $countPanier = $thisPanier->count();
         
         return $this->render('boutique/panier.html.twig', [
             'controller_name' => 'Mon panier',

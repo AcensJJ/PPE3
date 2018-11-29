@@ -1,11 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-
-
-<!-- Si connecter afficher panier -->
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-
 <div class="super_container">
 
 	<div class="super_container_inner">
@@ -60,7 +55,7 @@
 											
 										</div>
 										<div class="product_quantity_container">
-											<button type="button" name="{{ article.id }}" class="ui right floated red button">
+											<button type="button" name="{{ article.id }}" class="ui right floated red button supprArticle">
                                             Supprimer
                                             <i class="right chevron icon"></i>
                                         </button>
@@ -134,10 +129,6 @@
 		
 </div>
 
-	<!-- Si deconnecter , devoir se connecter --> 
-	{% else %}
-
-	{% endif %}
 {% endblock %}
 
 {% block javascripts %}
