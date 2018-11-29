@@ -27,27 +27,65 @@
 			</div>
 		</div>
 
-		<!-- Cart -->
-
 		<div class="cart_section">
 			<div class="container">
-				{% set totalPrix = 0 %}
-				{% for article in articlesPanier %}
-				{% set totalPrix = totalPrix + article.prix %}
-				
-				{% endfor %}
+				<div class="row">
+					<div class="col">
+						<div class="cart_container">
+							
+							<!-- Cart Bar -->
+							<div class="cart_bar">
+								<ul class="cart_bar_list item_list d-flex flex-row align-items-center justify-content-end">
+									<li class="mr-auto">Produit</li>
+									<li></li>
+									<li>Prix</li>
+								</ul>
+							</div>
+
+							<!-- Cart Items -->
+							<div class="cart_items">
+								<ul class="cart_items_list">
+
+									{% set totalPrix = 0 %}
+									{% for article in articlesPanier %}
+									{% set totalPrix = totalPrix + article.prix %}
+									<!-- Cart Item -->
+									<li class="cart_item item_list d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-lg-end justify-content-start">
+										<div class="product d-flex flex-lg-row flex-column align-items-lg-center align-items-start justify-content-start mr-auto">
+											<div><div class="product_number">1</div></div>
+											<div><div class="product_image"><img src="{{ article.image }}" alt=""></div></div>
+											
+											<div class="product_name" style="margin-left: 80px;"><a href="path('article',{'id': produit.id})">{{ article.titre }}</a></div>
+											<div class="product_text" style="margin-left: 40px;">{{ article.description | raw }}</div>
+											
+										</div>
+										<div class="product_quantity_container">
+											<button type="button" name="{{ article.id }}" class="ui right floated red button">
+                                            Supprimer
+                                            <i class="right chevron icon"></i>
+                                        </button>
+										</div>
+										<div class="product_total product_text"><span>Total: </span>{{ article.prix }}€</div>
+									</li>
+									{% endfor %}
+								</ul>
+							</div>		
+						</div>
+					</div>
+				</div>
+
 				<div class="row cart_extra_row">
 					<div class="col-lg-6">
 						<div class="cart_extra cart_extra_1">
 							<div class="cart_extra_content cart_extra_coupon">
-								<div class="cart_extra_title">Coupon code</div>
+								{#<div class="cart_extra_title">Coupon code</div>
 								<div class="coupon_form_container">
 									<form action="#" id="coupon_form" class="coupon_form">
 										<input type="text" class="coupon_input" required="required">
 										<button class="coupon_button">apply</button>
 									</form>
 								</div>
-								{#<div class="coupon_text">Phasellus sit amet nunc eros. Sed nec congue tellus. Aenean nulla nisl, volutpat blandit lorem ut.</div>#}
+								<div class="coupon_text">Phasellus sit amet nunc eros. Sed nec congue tellus. Aenean nulla nisl, volutpat blandit lorem ut.</div>#}
 								<div class="shipping">
 									<div class="cart_extra_title">Shipping Method</div>
 									<ul>

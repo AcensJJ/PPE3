@@ -71,34 +71,4 @@ class ConnexionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/activateAccount/{token}", name="activateAccount")
-     */
-    public function activateAccount($token, Request $request) {
-
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $user = $repo->createQueryBuilder('c')
-                                ->where('c.tokenConfirm = :token')
-                                ->setParameter('token', $token)
-                                ->getQuery()
-                                ->setMaxResults(1)
-                                ->execute();
-        
-        //Si token exist or not
-        if(!empty($user)){
-            $user = $user[0];
-            $manager = $this->getDoctrine()->getManager();
-            $user->setTokenConfirm(NULL)
-                    ->setEnabled(1);
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', "Votre compte est activé, connectez-vous !");
-            return $this->redirectToRoute('fos_user_security_login');
-
-        } else {
-
-            $this->addFlash('warning', "Ce lien d'activation est invalide ou expiré !");
-            return $this->redirectToRoute('boutique');
-
-        }
 }

@@ -55,7 +55,6 @@
             {% endif %}
               
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <li> Connecté en tant que {{ app.user.username }}</li>
             <li> <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             <li><a href="{{ path('panier') }}"><i class='fa fa-shopping-cart' style='font-size:36px'></i></a></li>
             {% else %}
