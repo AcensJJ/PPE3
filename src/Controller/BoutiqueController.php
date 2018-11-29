@@ -45,7 +45,6 @@ class BoutiqueController extends AbstractController
             'controller_name'=> 'Les articles',
             'produit' => $produit,
             ]);
-
     }
 
     /**
@@ -56,11 +55,11 @@ class BoutiqueController extends AbstractController
         //IF AJAX ADD PANIER
         if($request->isXmlHttpRequest()){
             //SAVOIR SI L'ARTICLE EXISTE DEJA DANS LA COLLECTION DU PANIER DE L'USER
-            $thisCart = $user->getPanier();
-            $thisCart->addArticle($article);
-            $manager->persist($thisCart);
+            $thisPanier = $user->getPanier();
+            $thisPanier->addArticle($article);
+            $manager->persist($thisPanier);
             $manager->flush();
-            $newCountPanier = $thisCart->getArticles()->count();
+            $newCountPanier = $thisPanier->getArticles()->count();
             
             $response = new JsonResponse(array("response" => 1, "newCountPanier" => $newCountPanier));
             return $response;
@@ -70,18 +69,43 @@ class BoutiqueController extends AbstractController
             'controller_name'=> 'Un article',
             'article' => $article,
             ]);
-
     }
 
     /**
      * @Route("/panier", name="panier")
      */
-    public function panier(){
+    public function panier(UserInterface $user, Request $request, ObjectManager $manager)
+    {
+        $thisPanier = $this->getDoctrine()
+                         ->getRepository(Panier::class)
+                         ->createQueryBuilder('c')
+                         ->where('c.user = :user')
+                         ->setParameter('user', $user)
+                         ->setMaxResults(1)
+                         ->getQuery()
+                         ->getSingleResult();
 
-        return $this->render('boutique/panier.html.twig',[
-            'controller_name'=> 'Panier',
-            ]);
+        //IF AJAX REMOVE ARTICLE PANIER
+        if($request->isXmlHttpRequest()){
+            $idArticle = $request->request->get('id');
+            $article = $this->getDoctrine()
+                            ->getRepository(Produit::class)
+                            ->find($idArticle);
+            $thisPanier->removeArticle($article);
+            $manager->persist($thisPanier);
+            $manager->flush();
 
+            $response = new JsonResponse("1");
+            return $response;
+        }
+
+        $thisPanier = $thisPanier->getArticles();
+        $countPanier = $thisPanier->count();
+        
+        return $this->render('boutique/panier.html.twig', [
+            'controller_name' => 'Mon panier',
+            'articlesPanier' => $thisPanier,
+            ]);          
     }
-  
+
 }
