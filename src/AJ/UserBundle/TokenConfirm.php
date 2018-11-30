@@ -1,5 +1,5 @@
 <?php
-namespace App\GC\UserBundle;
+namespace App\AJ\UserBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

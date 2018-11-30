@@ -1,5 +1,5 @@
 <?php
-namespace App\GC\PayPalBundle;
+namespace App\AJ\PayPalBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

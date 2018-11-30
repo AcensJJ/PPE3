@@ -1,5 +1,5 @@
 <?php
-namespace App\GC\CommandeBundle;
+namespace App\AJ\CommandeBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

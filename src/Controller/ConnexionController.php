@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\AJ\UserBundle\TokenConfirm;
 use App\Entity\User;
 use App\Entity\Panier;
 use App\Form\UserType;
@@ -37,7 +38,7 @@ class ConnexionController extends AbstractController
             //Token Confirm
             $tokenClass = new TokenConfirm();
             $token = $tokenClass->generateTokenConfirm();
-            $user->setTokenConfirm($token);
+            $user->setConfirmationToken($token);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             // $entityManager->persist($cart);
