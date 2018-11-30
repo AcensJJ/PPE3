@@ -39,11 +39,6 @@ class Produit
     private $prix;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $stock;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="produits")
      */
     private $categorieProduit;
@@ -108,18 +103,6 @@ class Produit
     public function setPrix(int $prix): self
     {
         $this->prix = $prix;
-
-        return $this;
-    }
-
-    public function getStock(): ?int
-    {
-        return $this->stock;
-    }
-
-    public function setStock(int $stock): self
-    {
-        $this->stock = $stock;
 
         return $this;
     }

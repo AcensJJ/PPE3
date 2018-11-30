@@ -11,18 +11,67 @@ class ProduitFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-      for($i=1;$i<=6 ;$i++){
+      for($i=1;$i<=3 ;$i++){
 
-        $produit=new Produit;
+        $tshirt=new Produit;
         $cate = $this->getReference('Tshirt');
-        $produit->setTitre("T-shirt Collection n°$i")
+        $tshirt->setTitre("T-shirt Collection n°$i")
                  ->setDescription("Edition Speciale")
                  ->setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAM0_BJKsv2rWNB2DWxbaHahLjBZH-GImrY4CPpuJ7qa49F81Y")
                  ->setPrix("10$i")
-                 ->setStock("1$i")
                  ->setCategorieProduit($cate);          
-        $manager->persist($produit);
+        $manager->persist($tshirt);
       }
+
+      for($i=1;$i<=3 ;$i++){
+
+        $pull=new Produit;
+        $cate = $this->getReference('Pull');
+        $pull->setTitre("Pull Collection n°$i")
+                 ->setDescription("Edition Speciale")
+                 ->setImage("https://images-na.ssl-images-amazon.com/images/I/81jNqMIbRCL._SY355_.jpg")
+                 ->setPrix("10$i")
+                 ->setCategorieProduit($cate);          
+        $manager->persist($pull);
+      }
+
+      for($i=1;$i<=3 ;$i++){
+
+        $short=new Produit;
+        $cate = $this->getReference('Short');
+        $short->setTitre("Short Collection n°$i")
+                 ->setDescription("Edition Speciale")
+                 ->setImage("https://cdn.leslipfrancais.fr/1921-thickbox_default/le-capitaine-short-de-bain-bleu-marine.jpg")
+                 ->setPrix("10$i")
+                 ->setCategorieProduit($cate);          
+        $manager->persist($short);
+      }
+
+      for($i=1;$i<=3 ;$i++){
+
+        $veste=new Produit;
+        $cate = $this->getReference('Veste');
+        $veste->setTitre("Veste Collection n°$i")
+                 ->setDescription("Edition Speciale")
+                 ->setImage("https://www.decathlon.fr/media/834/8344619/big_8def5110-63c0-431a-97fd-c3ac8ee99a5d.jpg")
+                 ->setPrix("10$i")
+                 ->setCategorieProduit($cate);          
+        $manager->persist($veste);
+      }
+
+      for($i=1;$i<=3 ;$i++){
+
+        $pantalon=new Produit;
+        $cate = $this->getReference('Pantalon');
+        $pantalon->setTitre("Pantalon Collection n°$i")
+                 ->setDescription("Edition Speciale")
+                 ->setImage("https://media.wuerth.com/stmedia/modyf/shop/900px/2125180.jpg")
+                 ->setPrix("10$i")
+                 ->setCategorieProduit($cate);          
+        $manager->persist($pantalon);
+      }
+
+
         $manager->flush();
     }
 }
