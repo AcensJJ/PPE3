@@ -74,8 +74,12 @@ class BoutiqueController extends AbstractController
     /**
      * @Route("/panier", name="panier")
      */
-    public function panier(UserInterface $user, Request $request, ObjectManager $manager)
+    public function panier(UserInterface $user = null, Request $request, ObjectManager $manager)
     {
+        if($user == null){
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
         $thisPanier = $this->getDoctrine()
                          ->getRepository(Panier::class)
                          ->createQueryBuilder('c')
