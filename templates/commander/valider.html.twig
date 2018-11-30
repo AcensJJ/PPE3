@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block title %}Sell - {{ controller_name }}{% endblock %}
+{% block body %}
+
+<div class="super_container">
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+        <div class="products">
+
+            <div class="html ui top attached segment">
+                <div class="ui three top attached steps">
+                    <div class="active step">
+                        <i class="truck icon"></i>
+                        <div class="content">
+                        <div class="title">Livraision</div>
+                        <div class="description">Information sur la Livraision</div>
+                        </div>
+                    </div>
+                    <div class="active step">
+                        <i class="payment icon"></i>
+                        <div class="content">
+                        <div class="title">Payement</div>
+                        <div class="description">Votre méthode de payement</div>
+                        </div>
+                    </div>
+                    <div class="active step">
+                        <i class="info icon"></i>
+                        <div class="content">
+                        <div class="title">Confirmation</div>
+                        <div class="description">Verifier vos details</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui attached segment">
+                    form
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

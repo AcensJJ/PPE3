@@ -27,7 +27,7 @@ class BoutiqueController extends AbstractController
                             ->execute();
         
         return $this->render('boutique/index.html.twig', [
-            'controller_name' => 'BoutiqueController',
+            'controller_name' => 'Boutique',
             'produits' => $produits, 
         ]);
         
