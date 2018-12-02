@@ -44,7 +44,7 @@ class ConnexionController extends AbstractController
             // $entityManager->persist($cart);
 
             //SendMailToken
-            $linkConfirm = "127.0.0.1/activateAccount/".$token;
+            $linkConfirm = "127.0.0.1:8000/activateAccount/".$token;
             $message = (new \Swift_Message('Activez votre compte ! - AcensSell'))
             ->setFrom('no-reply@AcensSell.fr')
             ->setTo($user->getEmail())
@@ -62,7 +62,7 @@ class ConnexionController extends AbstractController
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
             $this->addFlash('success', 'Votre compte à bien été enregistré, activez le grâce au lien que nous vous avons envoyé par mail !');
-            //return $this->redirectToRoute('login');
+            return $this->redirectToRoute('login');
         }
         return $this->render('connexion/inscription.html.twig', [
             'controller_name' => 'Inscription',
@@ -71,5 +71,39 @@ class ConnexionController extends AbstractController
             'title' => 'Inscription'
         ]);
     }
+
+    /**
+     * @Route("/activateAccount/{token}", name="activateAccount")
+     */
+    public function activateAccount($token, Request $request) {
+
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->createQueryBuilder('c')
+                                ->where('c.confirmationToken = :token')
+                                ->setParameter('token', $token)
+                                ->getQuery()
+                                ->setMaxResults(1)
+                                ->execute();
+        
+        //Si token exist or not
+        if(!empty($user)){
+            $user = $user[0];
+            $manager = $this->getDoctrine()->getManager();
+            $user->setConfirmationToken(NULL)
+                    ->setEnabled(1);
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash('success', "Votre compte est activé, connectez-vous !");
+            return $this->redirectToRoute('fos_user_security_login');
+
+        } else {
+
+            $this->addFlash('warning', "Ce lien d'activation est invalide ou expiré !");
+            return $this->redirectToRoute('boutique');
+
+        }
+        
+    }
+
 
 }

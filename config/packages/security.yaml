@@ -34,3 +34,6 @@ security:
     - { path: ^/routeinscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: ^/admin/, role: ROLE_ADMIN }
+    - { path: ^/commander, roles: ROLE_USER }
+    - { path: ^/payement, roles: ROLE_USER }
+    - { path: ^/confirmer, roles: ROLE_USER }
