@@ -48,10 +48,16 @@ class Produit
      */
     private $panier;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\CommandeOrder", mappedBy="relation")
+     */
+    private $commande;
+
     public function __construct()
     {
         $this->userId = new ArrayCollection();
         $this->paniers = new ArrayCollection();
+        $this->commande = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +133,34 @@ class Produit
     public function setPanier(?Panier $panier): self
     {
         $this->panier = $panier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CommandeOrder[]
+     */
+    public function getCommande(): Collection
+    {
+        return $this->commande;
+    }
+
+    public function addCommande(CommandeOrder $commande): self
+    {
+        if (!$this->commande->contains($commande)) {
+            $this->commande[] = $commande;
+            $commande->addRelation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(CommandeOrder $commande): self
+    {
+        if ($this->commande->contains($commande)) {
+            $this->commande->removeElement($commande);
+            $commande->removeRelation($this);
+        }
 
         return $this;
     }
