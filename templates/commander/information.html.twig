@@ -39,7 +39,12 @@
                         {# form Identity #}
                         <div class="col-sm-6">
                             <div class="box">
-                                aaa
+                                <div class="field">
+                                    {{ form_start(form, {'method': 'post', 'action': path('commander'), 'attr': {'class': 'ui form'}}) }}
+                                    {{ form_widget(form) }}
+                                </div>
+                                
+                                {{ form_end(form) }}
                             </div>
                         </div>
                         

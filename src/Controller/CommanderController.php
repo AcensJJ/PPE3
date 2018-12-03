@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\IdentityOrder;
+use App\Form\IdentityOrderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CommanderController extends AbstractController
@@ -10,10 +13,22 @@ class CommanderController extends AbstractController
     /**
      * @Route("/commander", name="commander")
      */
-    public function index()
+    public function index(Request $request)
     {
+        $civil = new IdentityOrder();
+
+        $form = $this->createForm(IdentityOrderType::class, $civil);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+            return $this->redirectToRoute('payement');
+        }
+
         return $this->render('commander/information.html.twig', [
             'controller_name' => 'Commander',
+            'form' => $form->createView(),
+            'title' => 'Commander'
         ]);
     }
 
