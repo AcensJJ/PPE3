@@ -28,6 +28,7 @@ class ConnexionController extends AbstractController
             // Encode the password
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
+                 ->setEnabled('1')
 
             // $cart = new Cart();
             $panier = new Panier();
@@ -36,32 +37,32 @@ class ConnexionController extends AbstractController
             $manager->flush();
 
             //Token Confirm
-            $tokenClass = new TokenConfirm();
-            $token = $tokenClass->generateTokenConfirm();
-            $user->setConfirmationToken($token);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
+            // $tokenClass = new TokenConfirm();
+            // $token = $tokenClass->generateTokenConfirm();
+            // $user->setConfirmationToken($token);
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($user);
             // $entityManager->persist($cart);
 
-            //SendMailToken
-            $linkConfirm = "127.0.0.1:8000/activateAccount/".$token;
-            $message = (new \Swift_Message('Activez votre compte ! - AcensSell'))
-            ->setFrom('no-reply@AcensSell.fr')
-            ->setTo($user->getEmail())
-            ->setBody(
-                $this->renderView(
-                    // templates/emails/registration.html.twig
-                    'emails/confirmToken.html.twig',
-                    array('linkConfirm' => $linkConfirm)
-                ),
-                'text/html'
-            );
-            $mailer->send($message);
+            // //SendMailToken
+            // $linkConfirm = "127.0.0.1:8000/activateAccount/".$token;
+            // $message = (new \Swift_Message('Activez votre compte ! - AcensSell'))
+            // ->setFrom('no-reply@AcensSell.fr')
+            // ->setTo($user->getEmail())
+            // ->setBody(
+            //     $this->renderView(
+            //         // templates/emails/registration.html.twig
+            //         'emails/confirmToken.html.twig',
+            //         array('linkConfirm' => $linkConfirm)
+            //     ),
+            //     'text/html'
+            // );
+            // $mailer->send($message);
 
             $entityManager->flush();
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
-            $this->addFlash('success', 'Votre compte à bien été enregistré, activez le grâce au lien que nous vous avons envoyé par mail !');
+            $this->addFlash('success', 'Votre compte à bien été enregistré !');
             return $this->redirectToRoute('login');
         }
         return $this->render('connexion/inscription.html.twig', [
@@ -72,36 +73,36 @@ class ConnexionController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/activateAccount/{token}", name="activateAccount")
-     */
-    public function activateAccount($token, Request $request) {
+    // /**
+    //  * @Route("/activateAccount/{token}", name="activateAccount")
+    //  */
+    // public function activateAccount($token, Request $request) {
 
-        $repo = $this->getDoctrine()->getRepository(User::class);
-        $user = $repo->createQueryBuilder('c')
-                                ->where('c.confirmationToken = :token')
-                                ->setParameter('token', $token)
-                                ->getQuery()
-                                ->setMaxResults(1)
-                                ->execute();
+    //     $repo = $this->getDoctrine()->getRepository(User::class);
+    //     $user = $repo->createQueryBuilder('c')
+    //                             ->where('c.confirmationToken = :token')
+    //                             ->setParameter('token', $token)
+    //                             ->getQuery()
+    //                             ->setMaxResults(1)
+    //                             ->execute();
         
-        //Si token exist or not
-        if(!empty($user)){
-            $user = $user[0];
-            $manager = $this->getDoctrine()->getManager();
-            $user->setConfirmationToken(NULL)
-                    ->setEnabled(1);
-            $manager->persist($user);
-            $manager->flush();
-            $this->addFlash('success', "Votre compte est activé, connectez-vous !");
-            return $this->redirectToRoute('fos_user_security_login');
+    //     //Si token exist or not
+    //     if(!empty($user)){
+    //         $user = $user[0];
+    //         $manager = $this->getDoctrine()->getManager();
+    //         $user->setConfirmationToken(NULL)
+    //                 ->setEnabled(1);
+    //         $manager->persist($user);
+    //         $manager->flush();
+    //         $this->addFlash('success', "Votre compte est activé, connectez-vous !");
+    //         return $this->redirectToRoute('fos_user_security_login');
 
-        } else {
+    //     } else {
 
-            $this->addFlash('warning', "Ce lien d'activation est invalide ou expiré !");
-            return $this->redirectToRoute('boutique');
+    //         $this->addFlash('warning', "Ce lien d'activation est invalide ou expiré !");
+    //         return $this->redirectToRoute('boutique');
 
-        }
+    //     }
         
     }
 
