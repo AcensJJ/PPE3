@@ -16,14 +16,14 @@
                         <div class="title">Information</div>
                         <div class="description">Vos informations personnelles</div>
                     </div>
-                    </div><div class="completed step">
+                    </div><div class="active step">
                         <i class="truck icon"></i>
                         <div class="content">
                         <div class="title">Livraision</div>
                         <div class="description">Information sur la Livraision</div>
                         </div>
                     </div>
-                    <div class="active step">
+                    <div class="disabled step">
                         <i class="payment icon"></i>
                         <div class="content">
                         <div class="title">Payement</div>
@@ -35,7 +35,7 @@
                         <div class="content">
                         <div class="title">Confirmation</div>
                         <div class="description">Verifier vos details</div>
-                         </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,18 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="box">
+                            <div class="field">
+                                {{ form_start(form, {'method': 'post', 'action': path('livraison'), 'attr': {'class': 'ui form'}}) }}
+                                {{ form_widget(form) }}
+                            </div>
+
+                            <div class="ui checkbox">
+                            </div>
+                            <div> 
+                                <input class="ui button" type="submit" id="_submit" value="Envoyer" />
+                            </div>
                             
+                            {{ form_end(form) }}
                         </div>
                     </div>
                     

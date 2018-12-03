@@ -30,15 +30,11 @@ class CommanderController extends AbstractController
                          ->getQuery()
                          ->getSingleResult();
 
-        // ajouter les valeurs aux entités
         $civil = new IdentityOrder();
-        $livraison = new LivraisonOrder();
-        // les deux form , civil / livraison
+        
         $form = $this->createForm(IdentityOrderType::class, $civil);
         $form->handleRequest($request);
-        $form2 = $this->createForm(LivraisonOrderType::class, $livraison);
-        $form2->handleRequest($request);
-        if ($form2->isSubmitted() && $form->isValid() && $form2->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $this->addFlash('success', 'Vos informations ont bien été enregistré !');
             return $this->redirectToRoute('payement');
@@ -51,7 +47,6 @@ class CommanderController extends AbstractController
             return $this->render('commander/information.html.twig', [
                 'controller_name' => 'Commander',
                 'form' => $form->createView(),
-                'form2' => $form2->createView(),
                 'title' => 'Commander'
             ]);
         } else {
@@ -60,12 +55,33 @@ class CommanderController extends AbstractController
     }
 
     /**
+     * @Route("/livraison", name="livraison")
+     */
+    public function livraison()
+    {
+        $livraison = new LivraisonOrder();
+        $form = $this->createForm(LivraisonOrderType::class, $livraison);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+            return $this->redirectToRoute('payement');
+        }
+
+        return $this->render('commander/livraison.html.twig', [
+            'controller_name' => 'Livraison',
+            'form' => $form->createView(),
+            'title' => 'Commander'
+        ]);
+    }
+
+     /**
      * @Route("/payement", name="payement")
      */
     public function payement()
     {
         return $this->render('commander/payement.html.twig', [
             'controller_name' => 'Payement',
+            'title' => 'Payement'
         ]);
     }
 
@@ -76,6 +92,7 @@ class CommanderController extends AbstractController
     {
         return $this->render('commander/valider.html.twig', [
             'controller_name' => 'Valider',
+            'title' => 'Valider'
         ]);
     }
 }
