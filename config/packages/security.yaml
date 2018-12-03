@@ -37,3 +37,4 @@ security:
     - { path: ^/commander, roles: ROLE_USER }
     - { path: ^/payement, roles: ROLE_USER }
     - { path: ^/confirmer, roles: ROLE_USER }
+    - { path: ^/register, roles: ROLE_ADMIN }
