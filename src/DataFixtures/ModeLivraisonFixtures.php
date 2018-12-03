@@ -10,10 +10,15 @@ class ModeLivraisonFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $product = new ModeLivraison();
-        $product->setMode('Gratuit')
+        $free = new ModeLivraison();
+        $free->setMode('standard')
                 ->setPrix('0');
-        $manager->persist($product);
+        $manager->persist($free);
+
+        $fast = new ModeLivraison();
+        $fast->setMode('fast')
+                ->setPrix('10');
+        $manager->persist($fast);
 
         $manager->flush();
     }

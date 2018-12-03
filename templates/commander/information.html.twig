@@ -51,11 +51,24 @@
                         {# form Livraison #}
                         <div class="col-sm-6">
                             <div class="box">
-                                aaa
+                                <div class="field">
+                                    {{ form_start(form2, {'method': 'post', 'action': path('commander'), 'attr': {'class': 'ui form'}}) }}
+                                    {{ form_widget(form2) }}
+                                </div>
+
+                                <div class="ui checkbox">
+                                </div>
+                                <div> 
+                                    <input class="ui button" type="submit" id="_submit" value="Envoyer" />
+                                </div>
+                                
+                                {{ form_end(form2) }}
+                             
                             </div>
                         </div>
-
                     </div>
+
+
                 </div>
             </div>
 

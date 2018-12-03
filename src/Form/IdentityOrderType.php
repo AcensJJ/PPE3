@@ -5,10 +5,11 @@ namespace App\Form;
 use App\Entity\IdentityOrder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 class IdentityOrderType extends AbstractType
 {
@@ -21,7 +22,7 @@ class IdentityOrderType extends AbstractType
             ->add('adresse', TextType::class)
             ->add('codePostal')
             ->add('ville')
-            ->add('pays')
+            ->add('pays', CountryType::class)
             ->add('email', EmailType::class)
         ;
     }
