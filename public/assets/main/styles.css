@@ -1,0 +1,7 @@
+.box{
+    margin:17px 0 19px 0;
+    background-color: white;
+    box-shadow: 0px 0px 0px 1px lightgray;
+    text-align: left;
+    color: black;
+}

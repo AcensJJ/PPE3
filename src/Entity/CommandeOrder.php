@@ -39,14 +39,9 @@ class CommandeOrder
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="commande")
+     * @ORM\Column(type="datetime")
      */
-    private $relation;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ModeLivraison", inversedBy="commande")
-     */
-    private $modeLivraison;
+    private $date;
 
     public function __construct()
     {
@@ -106,32 +101,6 @@ class CommandeOrder
         return $this;
     }
 
-    /**
-     * @return Collection|Produit[]
-     */
-    public function getRelation(): Collection
-    {
-        return $this->relation;
-    }
-
-    public function addRelation(Produit $relation): self
-    {
-        if (!$this->relation->contains($relation)) {
-            $this->relation[] = $relation;
-        }
-
-        return $this;
-    }
-
-    public function removeRelation(Produit $relation): self
-    {
-        if ($this->relation->contains($relation)) {
-            $this->relation->removeElement($relation);
-        }
-
-        return $this;
-    }
-
     public function getModeLivraison(): ?ModeLivraison
     {
         return $this->modeLivraison;
@@ -140,6 +109,18 @@ class CommandeOrder
     public function setModeLivraison(?ModeLivraison $modeLivraison): self
     {
         $this->modeLivraison = $modeLivraison;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): self
+    {
+        $this->date = $date;
 
         return $this;
     }

@@ -19,11 +19,6 @@ class ModeLivraison
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CommandeOrder", mappedBy="modeLivraison")
-     */
-    private $commande;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $mode;
@@ -33,6 +28,11 @@ class ModeLivraison
      */
     private $prix;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LivraisonOrder", inversedBy="modeLivraison")
+     */
+    private $livraison;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -41,37 +41,6 @@ class ModeLivraison
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection|CommandeOrder[]
-     */
-    public function getCommande(): Collection
-    {
-        return $this->commande;
-    }
-
-    public function addCommande(CommandeOrder $commande): self
-    {
-        if (!$this->commande->contains($commande)) {
-            $this->commande[] = $commande;
-            $commande->setModeLivraison($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(CommandeOrder $commande): self
-    {
-        if ($this->commande->contains($commande)) {
-            $this->commande->removeElement($commande);
-            // set the owning side to null (unless already changed)
-            if ($commande->getModeLivraison() === $this) {
-                $commande->setModeLivraison(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getMode(): ?string
@@ -94,6 +63,18 @@ class ModeLivraison
     public function setPrix(float $prix): self
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getLivraison(): ?LivraisonOrder
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(?LivraisonOrder $livraison): self
+    {
+        $this->livraison = $livraison;
 
         return $this;
     }
