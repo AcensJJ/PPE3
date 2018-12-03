@@ -17,7 +17,7 @@ class ConnexionController extends AbstractController
     /**
      * @Route("/inscription", name="inscription")
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, \Swift_Mailer $mailer, ObjectManager $manager) {
+    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder, ObjectManager $manager) {
         // build the form
         $user = new User();
 
@@ -27,8 +27,8 @@ class ConnexionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // Encode the password
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-                 ->setEnabled('1')
+            $user->setPassword($password)
+                 ->setEnabled('1');
 
             // $cart = new Cart();
             $panier = new Panier();
@@ -59,7 +59,7 @@ class ConnexionController extends AbstractController
             // );
             // $mailer->send($message);
 
-            $entityManager->flush();
+            // $entityManager->flush();
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
             $this->addFlash('success', 'Votre compte à bien été enregistré !');
@@ -104,7 +104,6 @@ class ConnexionController extends AbstractController
 
     //     }
         
-    }
-
-
+    // }
+    
 }
