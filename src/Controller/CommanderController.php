@@ -21,14 +21,11 @@ class CommanderController extends AbstractController
     public function index(UserInterface $user, Request $request, ObjectManager $manager)
     {
         // verifier que le panier n'est pas vide
-        $thisPanier = $this->getDoctrine()
-                         ->getRepository(Panier::class)
-                         ->createQueryBuilder('c')
-                         ->where('c.user = :user')
-                         ->setParameter('user', $user)
-                         ->setMaxResults(1)
-                         ->getQuery()
-                         ->getSingleResult();
+        $articlesPanier = $user->getCart()->getArticles();
+        if($articlesPanier->isEmpty()){
+            $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si votre panier est vide.');
+            return $this->redirectToRoute('index');
+        }
 
         $civil = new IdentityOrder();
         
@@ -40,18 +37,11 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('payement');
         }
 
-        $thisPanier = $thisPanier->getArticles();
-        $countPanier = $thisPanier->count();
-
-        if($countPanier != 0){
-            return $this->render('commander/information.html.twig', [
-                'controller_name' => 'Commander',
-                'form' => $form->createView(),
-                'title' => 'Commander'
-            ]);
-        } else {
-            return $this->redirectToRoute('panier');
-        }
+        return $this->render('commander/information.html.twig', [
+            'controller_name' => 'Commander',
+            'form' => $form->createView(),
+            'title' => 'Commander'
+        ]); 
     }
 
     /**
