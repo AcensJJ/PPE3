@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\ModeLivraison;
-use App\Entity\LivraisonOrder;
+use App\Entity\LivraisonUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -34,7 +34,7 @@ class LivraisonOrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => LivraisonOrder::class,
+            'data_class' => LivraisonUser::class,
         ]);
     }
 }
