@@ -49,6 +49,12 @@ class CommandeOrder
      */
     private $identity;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\LivraisonOrder", inversedBy="commandeOrder", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $livraison;
+
     public function __construct()
     {
         $this->relation = new ArrayCollection();
@@ -139,6 +145,18 @@ class CommandeOrder
     public function setIdentity(IdentityOrder $identity): self
     {
         $this->identity = $identity;
+
+        return $this;
+    }
+
+    public function getLivraison(): ?LivraisonOrder
+    {
+        return $this->livraison;
+    }
+
+    public function setLivraison(LivraisonOrder $livraison): self
+    {
+        $this->livraison = $livraison;
 
         return $this;
     }

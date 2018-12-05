@@ -33,6 +33,11 @@ class LivraisonOrder
      */
     private $adresse;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CommandeOrder", mappedBy="livraison", cascade={"persist", "remove"})
+     */
+    private $commandeOrder;
+
     public function __construct()
     {
         $this->modeLivraison = new ArrayCollection();
@@ -75,6 +80,23 @@ class LivraisonOrder
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getCommandeOrder(): ?CommandeOrder
+    {
+        return $this->commandeOrder;
+    }
+
+    public function setCommandeOrder(CommandeOrder $commandeOrder): self
+    {
+        $this->commandeOrder = $commandeOrder;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $commandeOrder->getLivraison()) {
+            $commandeOrder->setLivraison($this);
+        }
 
         return $this;
     }
