@@ -33,11 +33,6 @@ class LivraisonOrder
      */
     private $adresse;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ModeLivraison", mappedBy="livraison")
-     */
-    private $modeLivraison;
-
     public function __construct()
     {
         $this->modeLivraison = new ArrayCollection();
@@ -80,37 +75,6 @@ class LivraisonOrder
     public function setAdresse(string $adresse): self
     {
         $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ModeLivraison[]
-     */
-    public function getModeLivraison(): Collection
-    {
-        return $this->modeLivraison;
-    }
-
-    public function addModeLivraison(ModeLivraison $modeLivraison): self
-    {
-        if (!$this->modeLivraison->contains($modeLivraison)) {
-            $this->modeLivraison[] = $modeLivraison;
-            $modeLivraison->setLivraison($this);
-        }
-
-        return $this;
-    }
-
-    public function removeModeLivraison(ModeLivraison $modeLivraison): self
-    {
-        if ($this->modeLivraison->contains($modeLivraison)) {
-            $this->modeLivraison->removeElement($modeLivraison);
-            // set the owning side to null (unless already changed)
-            if ($modeLivraison->getLivraison() === $this) {
-                $modeLivraison->setLivraison(null);
-            }
-        }
 
         return $this;
     }

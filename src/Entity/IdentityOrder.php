@@ -27,7 +27,7 @@ class IdentityOrder
     private $prenom;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $numTel;
 
@@ -55,6 +55,11 @@ class IdentityOrder
      * @ORM\Column(type="string", length=255)
      */
     private $email;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CommandeOrder", mappedBy="identity", cascade={"persist", "remove"})
+     */
+    private $commandeOrder;
 
     public function getId(): ?int
     {
@@ -153,6 +158,23 @@ class IdentityOrder
     public function setEmail(string $email): self
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getCommandeOrder(): ?CommandeOrder
+    {
+        return $this->commandeOrder;
+    }
+
+    public function setCommandeOrder(CommandeOrder $commandeOrder): self
+    {
+        $this->commandeOrder = $commandeOrder;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $commandeOrder->getIdentity()) {
+            $commandeOrder->setIdentity($this);
+        }
 
         return $this;
     }

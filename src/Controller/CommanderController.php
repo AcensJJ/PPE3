@@ -6,7 +6,6 @@ use App\Entity\IdentityOrder;
 use App\Entity\LivraisonOrder;
 use App\Entity\Panier;
 use App\Form\IdentityOrderType;
-use App\Form\LivraisonOrderType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,9 +26,9 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        $civil = new IdentityOrder();
+        $civil = new IdentityUser();
         
-        $form = $this->createForm(IdentityOrderType::class, $civil);
+        $form = $this->createForm(IdentityUserType::class, $civil);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -44,25 +43,25 @@ class CommanderController extends AbstractController
         ]); 
     }
 
-    /**
-     * @Route("/livraison", name="livraison")
-     */
-    public function livraison()
-    {
-        $livraison = new LivraisonOrder();
-        $form = $this->createForm(LivraisonOrderType::class, $livraison);
-        if ($form->isSubmitted() && $form->isValid()) {
+    // /**
+    //  * @Route("/livraison", name="livraison")
+    //  */
+    // public function livraison()
+    // {
+    //     $livraison = new LivraisonOrder();
+    //     $form = $this->createForm(LivraisonOrderType::class, $livraison);
+    //     if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->addFlash('success', 'Vos informations ont bien été enregistré !');
-            return $this->redirectToRoute('payement');
-        }
+    //         $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+    //         return $this->redirectToRoute('payement');
+    //     }
 
-        return $this->render('commander/livraison.html.twig', [
-            'controller_name' => 'Livraison',
-            'form' => $form->createView(),
-            'title' => 'Commander'
-        ]);
-    }
+    //     return $this->render('commander/livraison.html.twig', [
+    //         'controller_name' => 'Livraison',
+    //         'form' => $form->createView(),
+    //         'title' => 'Commander'
+    //     ]);
+    // }
 
      /**
      * @Route("/payement", name="payement")

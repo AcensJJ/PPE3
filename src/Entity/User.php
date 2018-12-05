@@ -23,6 +23,11 @@ protected $id;
  */
 private $panier;
 
+/**
+ * @ORM\OneToOne(targetEntity="App\Entity\IdentityUser", mappedBy="user", cascade={"persist", "remove"})
+ */
+private $identityUser;
+
 public function __construct()
 {
 parent::__construct();
@@ -42,6 +47,24 @@ public function setPanier(Panier $panier): self
     // set the owning side of the relation if necessary
     if ($this !== $panier->getUser()) {
         $panier->setUser($this);
+    }
+
+    return $this;
+}
+
+public function getIdentityUser(): ?IdentityUser
+{
+    return $this->identityUser;
+}
+
+public function setIdentityUser(?IdentityUser $identityUser): self
+{
+    $this->identityUser = $identityUser;
+
+    // set (or unset) the owning side of the relation if necessary
+    $newUser = $identityUser === null ? null : $this;
+    if ($newUser !== $identityUser->getUser()) {
+        $identityUser->setUser($newUser);
     }
 
     return $this;

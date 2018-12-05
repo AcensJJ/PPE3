@@ -43,6 +43,12 @@ class CommandeOrder
      */
     private $date;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\IdentityOrder", inversedBy="commandeOrder", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $identity;
+
     public function __construct()
     {
         $this->relation = new ArrayCollection();
@@ -121,6 +127,18 @@ class CommandeOrder
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getIdentity(): ?IdentityOrder
+    {
+        return $this->identity;
+    }
+
+    public function setIdentity(IdentityOrder $identity): self
+    {
+        $this->identity = $identity;
 
         return $this;
     }

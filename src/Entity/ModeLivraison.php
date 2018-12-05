@@ -33,6 +33,11 @@ class ModeLivraison
      */
     private $livraison;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\LivraisonUser", inversedBy="mode")
+     */
+    private $yes;
+
     public function __construct()
     {
         $this->commande = new ArrayCollection();
@@ -75,6 +80,18 @@ class ModeLivraison
     public function setLivraison(?LivraisonOrder $livraison): self
     {
         $this->livraison = $livraison;
+
+        return $this;
+    }
+
+    public function getYes(): ?LivraisonUser
+    {
+        return $this->yes;
+    }
+
+    public function setYes(?LivraisonUser $yes): self
+    {
+        $this->yes = $yes;
 
         return $this;
     }
