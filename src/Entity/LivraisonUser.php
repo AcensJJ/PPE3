@@ -19,13 +19,23 @@ class LivraisonUser
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ModeLivraison", mappedBy="yes")
+     * @ORM\Column(type="string", length=255)
      */
-    private $mode;
+    private $adresse;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="livraisonUsers")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\ModeLivraison", inversedBy="livraisonUsers")
+     */
+    private $modeLivraison;
 
     public function __construct()
     {
-        $this->mode = new ArrayCollection();
+        $this->modeLivraison = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -33,34 +43,40 @@ class LivraisonUser
         return $this->id;
     }
 
-    /**
-     * @return Collection|ModeLivraison[]
-     */
-    public function getMode(): Collection
+    public function getAdresse(): ?string
     {
-        return $this->mode;
+        return $this->adresse;
     }
 
-    public function addMode(ModeLivraison $mode): self
+    public function setAdresse(string $adresse): self
     {
-        if (!$this->mode->contains($mode)) {
-            $this->mode[] = $mode;
-            $mode->setYes($this);
-        }
+        $this->adresse = $adresse;
 
         return $this;
     }
 
-    public function removeMode(ModeLivraison $mode): self
+    public function getUser(): ?User
     {
-        if ($this->mode->contains($mode)) {
-            $this->mode->removeElement($mode);
-            // set the owning side to null (unless already changed)
-            if ($mode->getYes() === $this) {
-                $mode->setYes(null);
-            }
-        }
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
+
+    public function getModeLivraison(): ?ModeLivraison
+    {
+        return $this->modeLivraison;
+    }
+
+    public function setModeLivraison(?ModeLivraison $modeLivraison): self
+    {
+        $this->modeLivraison = $modeLivraison;
+
+        return $this;
+    }
+
 }

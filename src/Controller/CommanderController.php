@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\IdentityOrder;
-use App\Entity\LivraisonOrder;
+use App\Entity\IdentityUser;
+use App\Entity\LivraisonUser;
 use App\Entity\Panier;
-use App\Form\IdentityOrderType;
+use App\Form\IdentityUserType;
+use App\Form\LivraisonUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -20,20 +21,30 @@ class CommanderController extends AbstractController
     public function index(UserInterface $user, Request $request, ObjectManager $manager)
     {
         // verifier que le panier n'est pas vide
-        $articlesPanier = $user->getCart()->getArticles();
+        $articlesPanier = $user->getPanier()->getArticles();
         if($articlesPanier->isEmpty()){
             $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si votre panier est vide.');
-            return $this->redirectToRoute('index');
+            return $this->redirectToRoute('boutique');
         }
 
-        $civil = new IdentityUser();
+        // si le entité existe afficher les info
+        $civil = $user->getIdentityUser();
+
+        if($civil == null){
+            // si il est inexistant, créer le form
+            $civil = new IdentityUser();
+        }
         
         $form = $this->createForm(IdentityUserType::class, $civil);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $civil->setUser($user);
+            
+            $manager->persist($civil);
+            $manager->flush();
 
             $this->addFlash('success', 'Vos informations ont bien été enregistré !');
-            return $this->redirectToRoute('payement');
+            return $this->redirectToRoute('livraison');
         }
 
         return $this->render('commander/information.html.twig', [
@@ -43,25 +54,36 @@ class CommanderController extends AbstractController
         ]); 
     }
 
-    // /**
-    //  * @Route("/livraison", name="livraison")
-    //  */
-    // public function livraison()
-    // {
-    //     $livraison = new LivraisonOrder();
-    //     $form = $this->createForm(LivraisonOrderType::class, $livraison);
-    //     if ($form->isSubmitted() && $form->isValid()) {
+    /**
+     * @Route("/livraison", name="livraison")
+     */
+    public function livraison(UserInterface $user, Request $request, ObjectManager $manager)
+    {
+        // si le entité existe afficher les info
+        $livraison = null;
 
-    //         $this->addFlash('success', 'Vos informations ont bien été enregistré !');
-    //         return $this->redirectToRoute('payement');
-    //     }
+        if($livraison == null){
+            // si il est inexistant, créer le form
+            $livraison = new LivraisonUser();
+        }
+        
+        $form = $this->createForm(LivraisonUserType::class, $livraison);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $livraison->setUser($user);
 
-    //     return $this->render('commander/livraison.html.twig', [
-    //         'controller_name' => 'Livraison',
-    //         'form' => $form->createView(),
-    //         'title' => 'Commander'
-    //     ]);
-    // }
+            $manager->persist($livraison);
+            $manager->flush();
+
+            $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+            return $this->redirectToRoute('payement');
+        }
+
+        return $this->render('commander/livraison.html.twig', [
+            'controller_name' => 'Livraison',
+            'form' => $form->createView(),
+            'title' => 'Commander'
+        ]);
+    }
 
      /**
      * @Route("/payement", name="payement")

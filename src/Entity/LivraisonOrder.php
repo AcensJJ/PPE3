@@ -34,14 +34,9 @@ class LivraisonOrder
     private $adresse;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\CommandeOrder", mappedBy="livraison", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\ModeLivraison", inversedBy="livraisonOrders")
      */
-    private $commandeOrder;
-
-    public function __construct()
-    {
-        $this->modeLivraison = new ArrayCollection();
-    }
+    private $modeLivraison;
 
     public function getId(): ?int
     {
@@ -97,6 +92,18 @@ class LivraisonOrder
         if ($this !== $commandeOrder->getLivraison()) {
             $commandeOrder->setLivraison($this);
         }
+
+        return $this;
+    }
+
+    public function getModeLivraison(): ?ModeLivraison
+    {
+        return $this->modeLivraison;
+    }
+
+    public function setModeLivraison(?ModeLivraison $modeLivraison): self
+    {
+        $this->modeLivraison = $modeLivraison;
 
         return $this;
     }

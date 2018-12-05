@@ -29,18 +29,20 @@ class ModeLivraison
     private $prix;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\LivraisonOrder", inversedBy="modeLivraison")
+     * @ORM\OneToMany(targetEntity="App\Entity\LivraisonOrder", mappedBy="modeLivraison")
      */
-    private $livraison;
+    private $livraisonOrders;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\LivraisonUser", inversedBy="mode")
+     * @ORM\OneToMany(targetEntity="App\Entity\LivraisonUser", mappedBy="modeLivraison")
      */
-    private $yes;
+    private $livraisonUsers;
 
     public function __construct()
     {
         $this->commande = new ArrayCollection();
+        $this->livraisonOrders = new ArrayCollection();
+        $this->livraisonUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,26 +74,64 @@ class ModeLivraison
         return $this;
     }
 
-    public function getLivraison(): ?LivraisonOrder
+    /**
+     * @return Collection|LivraisonOrder[]
+     */
+    public function getLivraisonOrders(): Collection
     {
-        return $this->livraison;
+        return $this->livraisonOrders;
     }
 
-    public function setLivraison(?LivraisonOrder $livraison): self
+    public function addLivraisonOrder(LivraisonOrder $livraisonOrder): self
     {
-        $this->livraison = $livraison;
+        if (!$this->livraisonOrders->contains($livraisonOrder)) {
+            $this->livraisonOrders[] = $livraisonOrder;
+            $livraisonOrder->setModeLivraison($this);
+        }
 
         return $this;
     }
 
-    public function getYes(): ?LivraisonUser
+    public function removeLivraisonOrder(LivraisonOrder $livraisonOrder): self
     {
-        return $this->yes;
+        if ($this->livraisonOrders->contains($livraisonOrder)) {
+            $this->livraisonOrders->removeElement($livraisonOrder);
+            // set the owning side to null (unless already changed)
+            if ($livraisonOrder->getModeLivraison() === $this) {
+                $livraisonOrder->setModeLivraison(null);
+            }
+        }
+
+        return $this;
     }
 
-    public function setYes(?LivraisonUser $yes): self
+    /**
+     * @return Collection|LivraisonUser[]
+     */
+    public function getLivraisonUsers(): Collection
     {
-        $this->yes = $yes;
+        return $this->livraisonUsers;
+    }
+
+    public function addLivraisonUser(LivraisonUser $livraisonUser): self
+    {
+        if (!$this->livraisonUsers->contains($livraisonUser)) {
+            $this->livraisonUsers[] = $livraisonUser;
+            $livraisonUser->setModeLivraison($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivraisonUser(LivraisonUser $livraisonUser): self
+    {
+        if ($this->livraisonUsers->contains($livraisonUser)) {
+            $this->livraisonUsers->removeElement($livraisonUser);
+            // set the owning side to null (unless already changed)
+            if ($livraisonUser->getModeLivraison() === $this) {
+                $livraisonUser->setModeLivraison(null);
+            }
+        }
 
         return $this;
     }
