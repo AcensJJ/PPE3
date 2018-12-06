@@ -41,30 +41,28 @@
                 </div>
             </div> 
 
-            <div class="container" style="max-width: 40%;">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="box" style="margin-bottom: 0px; background-color : #838282;">
-                                <h3 style="color: #ffffff; padding-top: 9px; text-align: center;">Information personnelles</h3>
-                            </div>
+            <div class="container simple">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="box tete-box">
+                            <h3 class="tete-text">Information personnelles</h3>
                         </div>
-                        <div class="col-sm-12">
-                            <div class="box" style="background-color : #f6f6f6;">
-                                <div class="field">
-                                    {{ form_start(form, {'method': 'post', 'action': path('commander'), 'attr': {'class': 'ui form'}}) }}
-                                    {{ form_widget(form) }}
-                                </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="box">
+                            <div class="field">
+                                {{ form_start(form, {'method': 'post', 'action': path('commander'), 'attr': {'class': 'ui form'}}) }}
+                                {{ form_widget(form) }}
+                            </div>
 
-                                <div class="ui checkbox">
-                                </div>
-                                <div> 
-                                    <input class="ui button" type="submit" id="_submit" value="Suivant" />
-                                </div>
-                                
-                                {{ form_end(form) }}
+                            <div class="ui checkbox">
                             </div>
+                            <div> 
+                                <input class="ui button" type="submit" id="_submit" value="Suivant" />
+                            </div>
+                            
+                            {{ form_end(form) }}
                         </div>
-                        
                     </div>
                 </div>
             </div>
