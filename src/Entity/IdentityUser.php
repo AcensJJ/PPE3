@@ -34,26 +34,6 @@ class IdentityUser
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $codePostal;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $ville;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $pays;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $email;
 
     /**
@@ -98,54 +78,6 @@ class IdentityUser
     public function setNumTel(int $numTel): self
     {
         $this->numTel = $numTel;
-
-        return $this;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adresse;
-    }
-
-    public function setAdresse(string $adresse): self
-    {
-        $this->adresse = $adresse;
-
-        return $this;
-    }
-
-    public function getCodePostal(): ?int
-    {
-        return $this->codePostal;
-    }
-
-    public function setCodePostal(int $codePostal): self
-    {
-        $this->codePostal = $codePostal;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getPays(): ?string
-    {
-        return $this->pays;
-    }
-
-    public function setPays(string $pays): self
-    {
-        $this->pays = $pays;
 
         return $this;
     }

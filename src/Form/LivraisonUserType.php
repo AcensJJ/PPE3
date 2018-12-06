@@ -3,12 +3,12 @@
 namespace App\Form;
 
 use App\Entity\LivraisonUser;
-use App\Entity\ModeLivraison;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 class LivraisonUserType extends AbstractType
 {
@@ -16,23 +16,9 @@ class LivraisonUserType extends AbstractType
     {
         $builder
             ->add('adresse', TextType::class)
-            // ->add('modeLivraison', EntityType::class, array(
-            //     // looks for choices from this entity
-            //     'class' => ModeLivraison::class,
-
-            //     'choice_label' => 'mode',
-            
-            //     // used to render a select box, check boxes or radios
-            //     // 'multiple' => true,
-            //     // 'expanded' => true,
-            // ))
+            ->add('codePostal', NumberType::class)
+            ->add('ville', TextType::class)
+            ->add('pays', CountryType::class)
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => LivraisonUser::class,
-        ]);
     }
 }

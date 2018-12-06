@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,19 +22,24 @@ class LivraisonUser
     private $adresse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="livraisonUsers")
+     * @ORM\Column(type="integer")
      */
-    private $user;
+    private $codePostal;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ModeLivraison", inversedBy="livraisonUsers")
+     * @ORM\Column(type="string", length=255)
      */
-    private $modeLivraison;
+    private $ville;
 
-    public function __construct()
-    {
-        $this->modeLivraison = new ArrayCollection();
-    }
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pays;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="livraisonUser", cascade={"persist", "remove"})
+     */
+    private $user;
 
     public function getId(): ?int
     {
@@ -55,6 +58,42 @@ class LivraisonUser
         return $this;
     }
 
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(int $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(string $pays): self
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
@@ -63,18 +102,6 @@ class LivraisonUser
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getModeLivraison(): ?ModeLivraison
-    {
-        return $this->modeLivraison;
-    }
-
-    public function setModeLivraison(?ModeLivraison $modeLivraison): self
-    {
-        $this->modeLivraison = $modeLivraison;
 
         return $this;
     }

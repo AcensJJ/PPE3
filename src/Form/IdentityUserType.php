@@ -9,7 +9,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\CountryType;
 
 class IdentityUserType extends AbstractType
 {
@@ -19,10 +18,6 @@ class IdentityUserType extends AbstractType
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
             ->add('numTel', TelType::class)
-            ->add('adresse', TextType::class)
-            ->add('codePostal')
-            ->add('ville')
-            ->add('pays', CountryType::class)
             ->add('email', EmailType::class)
         ;
     }

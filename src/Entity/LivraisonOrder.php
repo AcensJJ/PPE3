@@ -34,9 +34,19 @@ class LivraisonOrder
     private $adresse;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ModeLivraison", inversedBy="livraisonOrders")
+     * @ORM\Column(type="integer")
      */
-    private $modeLivraison;
+    private $codePostal;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pays;
 
     public function getId(): ?int
     {
@@ -79,6 +89,42 @@ class LivraisonOrder
         return $this;
     }
 
+    public function getCodePostal(): ?int
+    {
+        return $this->codePostal;
+    }
+
+    public function setCodePostal(int $codePostal): self
+    {
+        $this->codePostal = $codePostal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getPays(): ?string
+    {
+        return $this->pays;
+    }
+
+    public function setPays(string $pays): self
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
     public function getCommandeOrder(): ?CommandeOrder
     {
         return $this->commandeOrder;
@@ -92,18 +138,6 @@ class LivraisonOrder
         if ($this !== $commandeOrder->getLivraison()) {
             $commandeOrder->setLivraison($this);
         }
-
-        return $this;
-    }
-
-    public function getModeLivraison(): ?ModeLivraison
-    {
-        return $this->modeLivraison;
-    }
-
-    public function setModeLivraison(?ModeLivraison $modeLivraison): self
-    {
-        $this->modeLivraison = $modeLivraison;
 
         return $this;
     }

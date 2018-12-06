@@ -29,15 +29,14 @@ class User extends BaseUser
     private $identityUser;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\LivraisonUser", mappedBy="user")
+     * @ORM\OneToOne(targetEntity="App\Entity\LivraisonUser", mappedBy="user", cascade={"persist", "remove"})
      */
-    private $livraisonUsers;
+    private $livraisonUser;
 
     public function __construct()
     {
     parent::__construct();
     $this->paniers = new ArrayCollection();
-    $this->livraisonUsers = new ArrayCollection();
     // your own logic
     }
 
@@ -76,32 +75,19 @@ class User extends BaseUser
         return $this;
     }
 
-    /**
-     * @return Collection|LivraisonUser[]
-     */
-    public function getLivraisonUsers(): Collection
+    public function getLivraisonUser(): ?LivraisonUser
     {
-        return $this->livraisonUsers;
+        return $this->livraisonUser;
     }
 
-    public function addLivraisonUser(LivraisonUser $livraisonUser): self
+    public function setLivraisonUser(?LivraisonUser $livraisonUser): self
     {
-        if (!$this->livraisonUsers->contains($livraisonUser)) {
-            $this->livraisonUsers[] = $livraisonUser;
-            $livraisonUser->setUser($this);
-        }
+        $this->livraisonUser = $livraisonUser;
 
-        return $this;
-    }
-
-    public function removeLivraisonUser(LivraisonUser $livraisonUser): self
-    {
-        if ($this->livraisonUsers->contains($livraisonUser)) {
-            $this->livraisonUsers->removeElement($livraisonUser);
-            // set the owning side to null (unless already changed)
-            if ($livraisonUser->getUser() === $this) {
-                $livraisonUser->setUser(null);
-            }
+        // set (or unset) the owning side of the relation if necessary
+        $newUser = $livraisonUser === null ? null : $this;
+        if ($newUser !== $livraisonUser->getUser()) {
+            $livraisonUser->setUser($newUser);
         }
 
         return $this;
