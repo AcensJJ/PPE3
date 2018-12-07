@@ -10,6 +10,7 @@ use App\Form\IdentityUserType;
 use App\Form\LivraisonUserType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +18,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommanderController extends AbstractController
 {
     /**
-     * @Route("/commander", name="commander")
-     */
+    * @Route("/commander", name="commander")
+    */
     public function index(UserInterface $user, Request $request, ObjectManager $manager)
     {
         // verifier que le panier n'est pas vide
@@ -56,9 +57,9 @@ class CommanderController extends AbstractController
     }
 
     /**
-     * @Route("/livraison", name="livraison")
+     * @Route("/livraison/{choice}", name="livraison")
      */
-    public function livraison(UserInterface $user, Request $request, ObjectManager $manager)
+    public function livraison($choice = null, UserInterface $user, Request $request, ObjectManager $manager)
     {
         // verifier que le panier n'est pas vide et que les informations personnelles sont remplis
         $articlesPanier = $user->getPanier()->getArticles();
@@ -74,22 +75,27 @@ class CommanderController extends AbstractController
         // si le entité existe afficher les info
         $livraison = $user->getLivraisonUser();
 
-        if($livraison == null){ //OR $session['patate'] == 1){
-           // $session['patate'] = 0
-             // si il est inexistant, créer le form
-             $livraison = new LivraisonUser();
+        //new Session pour recup les sessions
+        $session = new Session();
+        // récup une session définis
+        $sessionModeLivraison = $session->get('modifier');
 
-             $form = $this->createForm(LivraisonUserType::class, $livraison);
-             $form->handleRequest($request);
-             if ($form->isSubmitted() && $form->isValid()) {
+        if($livraison == null OR $sessionModeLivraison == 1){
+            $session->set('modifier', 0);
+            // si il est inexistant, créer le form
+            $livraison = new LivraisonUser();
+
+            $form = $this->createForm(LivraisonUserType::class, $livraison);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
                  
                 $livraison->setUser($user);
                 $manager->persist($livraison);
                 $manager->flush();
      
-                 $this->addFlash('success', 'Vos informations ont bien été enregistré !');
-                 return $this->redirectToRoute('livraison');
-             }
+                $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+                return $this->redirectToRoute('livraison');
+            }
             
             return $this->render('commander/livraison.html.twig', [
                 'controller_name' => 'Livraison',
@@ -98,6 +104,7 @@ class CommanderController extends AbstractController
             ]);
         }
 
+        // info de livraison de l'user
         $thisLivraison = $this->getDoctrine()
                          ->getRepository(LivraisonUser::class)
                          ->createQueryBuilder('c')
@@ -107,9 +114,30 @@ class CommanderController extends AbstractController
                          ->getQuery()
                          ->getSingleResult();
 
+        // different mode de livraison
         $repo=$this->getDoctrine()->getRepository(ModeLivraison::class);
-        $modeLivraison = $repo->findAll();
+        $modeLivraison = $repo->findAll(array(), array('id' => 'asc'));
 
+
+        if($choice != null){
+            // si choice = 0 (comme ce n'est pas un id posible,on attribut cette valeur au btn modifier)
+            // faire une session permettant de retourner au form de modification
+            if($choice == 0){
+
+                //new Session pour recup les sessions
+                $session = new Session();
+                // Créer une session pour l'user
+                $session->set('modifier', 1);
+                // récup une session définis
+                // $sessionModeLivraison = $session->get('modeLivraison');
+                return $this->redirectToRoute('livraison');
+
+            // session pour ajouter le mode de livraison
+            }else{
+
+                return $this->redirectToRoute('payement'); 
+            }
+        }
 
         return $this->render('commander/modelivraison.html.twig', [
             'controller_name' => 'Livraison',
@@ -120,9 +148,9 @@ class CommanderController extends AbstractController
         
     }
 
-     /**
-     * @Route("/payement", name="payement")
-     */
+    /**
+    * @Route("/payement", name="payement")
+    */
     public function payement()
     {
         return $this->render('commander/payement.html.twig', [

@@ -12,12 +12,14 @@ class ModeLivraisonFixtures extends Fixture
     {
         $free = new ModeLivraison();
         $free->setMode('standard')
-             ->setPrix('0');
+             ->setPrix('0')
+             ->setDescription('Livraison sous 1 semaine');
         $manager->persist($free);
 
         $fast = new ModeLivraison();
         $fast->setMode('fast')
-             ->setPrix('10');
+             ->setPrix('10')
+             ->setDescription('Livraison rapide sous 2 semaine');
         $manager->persist($fast);
 
         $manager->flush();

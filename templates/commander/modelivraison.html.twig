@@ -54,22 +54,26 @@
                                     
                                     <div class="grouped fields">
                                         <label for="mode">Choississez votre mode de livraison:</label>
-                                        
-                                        <form>
-                                            {% for livraison in modeLivraison %}
-                                            <div class="field">
-                                                <div class="ui radio checkbox modeLivraison">
-                                                    <input type="radio" name="mode" tabindex="0" class="hidden">
-                                                    <label>{{ livraison.mode }} <p>{{ livraison.prix }}€</p></label>
-                                                    
+
+                                        {% for livraison in modeLivraison %}
+                                        <div class="field">
+                                            <a href="{{ path('livraison', {"choice": livraison.id}) }}">
+                                                <div class="ui modeLivraison selectMode">
+                                                    <div style="text-align: center; margin-bottom: 2%; ">
+                                                        <label > {{ livraison.mode }} </label> 
+                                                    </div>
+                                                    <p> 
+                                                        {{ livraison.description }} <br />
+                                                        {{ livraison.prix }}€
+                                                    </p>
                                                 </div>
-                                            </div>
-                                            {% endfor %}
-                                        </form>
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                            
                                         
                                     </div>
-                                </div>
-                                                            
+                                </div>                          
                             </div>
                         </div>
                         <div class="right floated six wide column">
@@ -81,7 +85,7 @@
                                 <div class="ui checkbox">
                                 </div>
                                 <div> 
-                                    <input class="ui button" type="submit" id="_submit" value="Modifier"/>
+                                    <a href="{{ path('livraison', {"choice": 0}) }}"><input class="ui button" type="submit" id="modifier" value="Modifier"/></a>
                                 </div>
                             </div>
                         </div>
