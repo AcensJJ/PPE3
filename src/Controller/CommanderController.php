@@ -29,9 +29,8 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('boutique');
         }
 
-        // si le entité existe afficher les info
+        // voir si l' entité existe
         $civil = $user->getIdentityUser();
-
         if($civil == null){
             // si il est inexistant, créer le form
             $civil = new IdentityUser();
@@ -72,27 +71,27 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('commander');
         }
 
-        // si le entité existe afficher les info
+        // voir si le entité existe
         $livraison = $user->getLivraisonUser();
-
         //new Session pour recup les sessions
         $session = new Session();
         // récup une session définis
         $sessionModeLivraison = $session->get('modifier');
 
         if($livraison == null OR $sessionModeLivraison == 1){
-            $session->set('modifier', 0);
-            // si il est inexistant, créer le form
-            $livraison = new LivraisonUser();
+            if($livraison == null){
+                $livraison = new LivraisonUser();
+            }
 
             $form = $this->createForm(LivraisonUserType::class, $livraison);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-                 
                 $livraison->setUser($user);
                 $manager->persist($livraison);
                 $manager->flush();
-     
+                // apres que les modifications on était faite, remmettre a zéro la demande de modification
+                $session->set('modifier', 0);
+
                 $this->addFlash('success', 'Vos informations ont bien été enregistré !');
                 return $this->redirectToRoute('livraison');
             }
@@ -123,18 +122,12 @@ class CommanderController extends AbstractController
             // si choice = 0 (comme ce n'est pas un id posible,on attribut cette valeur au btn modifier)
             // faire une session permettant de retourner au form de modification
             if($choice == 0){
-
-                //new Session pour recup les sessions
-                $session = new Session();
-                // Créer une session pour l'user
                 $session->set('modifier', 1);
-                // récup une session définis
-                // $sessionModeLivraison = $session->get('modeLivraison');
                 return $this->redirectToRoute('livraison');
 
             // session pour ajouter le mode de livraison
             }else{
-
+                $session->set('modeLivraison', $choice);
                 return $this->redirectToRoute('payement'); 
             }
         }

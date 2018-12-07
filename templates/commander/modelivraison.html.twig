@@ -44,27 +44,27 @@
                 <div class="box">
 
                     <div class="ui grid">
-                        <div class="left floated six wide column">
-                            <div class="ui segment" style="margin-bottom: 10px;">
-                                <h3 style="text-align: center;">Mode de Livraison</h3>
+                        <div class="left floated six wide column" style="margin-left: 60px;">
+                            <div class="ui segment" style="margin-bottom: 10px; background: #414141;">
+                                <h3 style="text-align: center; color: white;">Mode de Livraison</h3>
                             </div>
                             <div class="ui segment" style="margin-bottom: 10px">
 
                                 <div class="ui form">
                                     
                                     <div class="grouped fields">
-                                        <label for="mode">Choississez votre mode de livraison:</label>
+                                        <label for="mode" style="color: #969696;">Choississez votre mode de livraison:</label>
 
                                         {% for livraison in modeLivraison %}
                                         <div class="field">
                                             <a href="{{ path('livraison', {"choice": livraison.id}) }}">
                                                 <div class="ui modeLivraison selectMode">
                                                     <div style="text-align: center; margin-bottom: 2%; ">
-                                                        <label > {{ livraison.mode }} </label> 
+                                                        <label style="padding-top: 5%; color : hsl(0, 88%, 42%);" > {{ livraison.mode }} </label> 
                                                     </div>
-                                                    <p> 
+                                                    <p class="descriptionLivraison"> 
                                                         {{ livraison.description }} <br />
-                                                        {{ livraison.prix }}€
+                                                        Prix : {{ livraison.prix }}€
                                                     </p>
                                                 </div>
                                             </a>
@@ -76,12 +76,17 @@
                                 </div>                          
                             </div>
                         </div>
-                        <div class="right floated six wide column">
-                            <div class="ui segment" style="margin-bottom: 10px;">
-                                <h3 style="text-align: center;">Information de Livraison</h3>
+                        <div class="right floated six wide column" style="margin-right: 60px;">
+                            <div class="ui segment" style="margin-bottom: 10px; background: #414141;">
+                                <h3 style="text-align: center; center; color: white;">Information de Livraison</h3>
                             </div>
                             <div class="ui segment" style="margin-bottom: 10px">
-                                <p> Adresse de livraison : {{ infoLivraison.adresse }} </p>
+                                <p> 
+                                    Adresse de livraison : {{ infoLivraison.adresse }} <br />
+                                    
+                                    Ville :  {{ infoLivraison.ville }} {{ infoLivraison.pays }} <br />
+                                    Code Postal : {{ infoLivraison.codePostal }} <br />
+                                </p>
                                 <div class="ui checkbox">
                                 </div>
                                 <div> 
