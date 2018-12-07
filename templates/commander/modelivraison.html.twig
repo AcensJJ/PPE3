@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+{% block title %}Sell - {{ controller_name }}{% endblock %}
+{% block body %}
+
+<div class="super_container">
+
+	<div class="super_container_inner">
+		<div class="super_overlay"></div>
+        <div class="products">
+
+           <div class="html ui top attached segment">
+                <div class="ui four top attached steps">
+                    <div class="completed step">
+                        <i class="user icon"></i>
+                        <div class="content">
+                        <div class="title">Information</div>
+                        <div class="description">Vos informations personnelles</div>
+                    </div>
+                    </div><div class="active step">
+                        <i class="truck icon"></i>
+                        <div class="content">
+                        <div class="title">Livraision</div>
+                        <div class="description">Information sur la Livraision</div>
+                        </div>
+                    </div>
+                    <div class="disabled step">
+                        <i class="payment icon"></i>
+                        <div class="content">
+                        <div class="title">Payement</div>
+                        <div class="description">Votre méthode de payement</div>
+                        </div>
+                    </div>
+                    <div class="disabled step">
+                        <i class="info icon"></i>
+                        <div class="content">
+                        <div class="title">Confirmation</div>
+                        <div class="description">Verifier vos details</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container double">
+                <div class="box">
+
+                    <div class="ui grid">
+                        <div class="left floated six wide column">
+                            <div class="ui segment" style="margin-bottom: 10px;">
+                                <h3 style="text-align: center;">Mode de Livraison</h3>
+                            </div>
+                            <div class="ui segment" style="margin-bottom: 10px">
+
+                                <div class="ui form">
+                                    
+                                    <div class="grouped fields">
+                                        <label for="mode">Choississez votre mode de livraison:</label>
+                                        
+                                        <form>
+                                            {% for livraison in modeLivraison %}
+                                            <div class="field">
+                                                <div class="ui radio checkbox modeLivraison">
+                                                    <input type="radio" name="mode" tabindex="0" class="hidden">
+                                                    <label>{{ livraison.mode }} <p>{{ livraison.prix }}€</p></label>
+                                                    
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </form>
+                                        
+                                    </div>
+                                </div>
+                                                            
+                            </div>
+                        </div>
+                        <div class="right floated six wide column">
+                            <div class="ui segment" style="margin-bottom: 10px;">
+                                <h3 style="text-align: center;">Information de Livraison</h3>
+                            </div>
+                            <div class="ui segment" style="margin-bottom: 10px">
+                                <p> Adresse de livraison : {{ infoLivraison.adresse }} </p>
+                                <div class="ui checkbox">
+                                </div>
+                                <div> 
+                                    <input class="ui button" type="submit" id="_submit" value="Modifier"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+<script>
+$('.ui.radio.checkbox.modeLivraison').checkbox();
+</script>
+{% endblock %}

@@ -2,16 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
 use App\Entity\IdentityUser;
 use App\Entity\LivraisonUser;
-use App\Entity\Panier;
+use App\Entity\ModeLivraison;
 use App\Form\IdentityUserType;
 use App\Form\LivraisonUserType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CommanderController extends AbstractController
 {
@@ -70,31 +71,53 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('commander');
         }
 
-         // si le entité existe afficher les info
-         $livraison = $user->getLivraisonUser();
+        // si le entité existe afficher les info
+        $livraison = $user->getLivraisonUser();
 
-         if($livraison == null){
+        if($livraison == null){ //OR $session['patate'] == 1){
+           // $session['patate'] = 0
              // si il est inexistant, créer le form
              $livraison = new LivraisonUser();
-         }
-         
-         $form = $this->createForm(LivraisonUserType::class, $livraison);
-         $form->handleRequest($request);
-         if ($form->isSubmitted() && $form->isValid()) {
-             
-            $livraison->setUser($user);
-            $manager->persist($livraison);
-            $manager->flush();
- 
-             $this->addFlash('success', 'Vos informations ont bien été enregistré !');
-             return $this->redirectToRoute('livraison');
-         }
-        
-        return $this->render('commander/livraison.html.twig', [
+
+             $form = $this->createForm(LivraisonUserType::class, $livraison);
+             $form->handleRequest($request);
+             if ($form->isSubmitted() && $form->isValid()) {
+                 
+                $livraison->setUser($user);
+                $manager->persist($livraison);
+                $manager->flush();
+     
+                 $this->addFlash('success', 'Vos informations ont bien été enregistré !');
+                 return $this->redirectToRoute('livraison');
+             }
+            
+            return $this->render('commander/livraison.html.twig', [
+                'controller_name' => 'Livraison',
+                'form' => $form->createView(),
+                'title' => 'Commander'
+            ]);
+        }
+
+        $thisLivraison = $this->getDoctrine()
+                         ->getRepository(LivraisonUser::class)
+                         ->createQueryBuilder('c')
+                         ->where('c.user = :user')
+                         ->setParameter('user', $user)
+                         ->setMaxResults(1)
+                         ->getQuery()
+                         ->getSingleResult();
+
+        $repo=$this->getDoctrine()->getRepository(ModeLivraison::class);
+        $modeLivraison = $repo->findAll();
+
+
+        return $this->render('commander/modelivraison.html.twig', [
             'controller_name' => 'Livraison',
-            'form' => $form->createView(),
-            'title' => 'Commander'
+            'title' => 'Commander',
+            'infoLivraison' => $thisLivraison,
+            'modeLivraison' => $modeLivraison,
         ]);
+        
     }
 
      /**

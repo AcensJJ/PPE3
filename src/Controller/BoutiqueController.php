@@ -25,6 +25,8 @@ class BoutiqueController extends AbstractController
                             ->setMaxResults(3)
                             ->getQuery()
                             ->execute();
+
+        
         
         return $this->render('boutique/index.html.twig', [
             'controller_name' => 'Boutique',
