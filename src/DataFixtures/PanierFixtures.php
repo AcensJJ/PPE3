@@ -13,15 +13,15 @@ class PanierFixtures extends Fixture  implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $panier = new Panier();
+        $panier1 = new Panier();
         $user = $this->getReference('admin');
-        $panier->setUser($user);
-        $manager->persist($panier);
+        $panier1->setUser($user);
+        $manager->persist($panier1);
 
-        $panier = new Panier();
+        $panier2 = new Panier();
         $user = $this->getReference('user');
-        $panier->setUser($user);
-        $manager->persist($panier);
+        $panier2->setUser($user);
+        $manager->persist($panier2);
 
         $manager->flush();
     }

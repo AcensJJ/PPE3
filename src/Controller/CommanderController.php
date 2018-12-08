@@ -6,6 +6,7 @@ use App\Entity\Panier;
 use App\Entity\IdentityUser;
 use App\Entity\LivraisonUser;
 use App\Entity\ModeLivraison;
+use App\Entity\ModePayment;
 use App\Form\IdentityUserType;
 use App\Form\LivraisonUserType;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,7 +61,7 @@ class CommanderController extends AbstractController
      */
     public function livraison($choice = null, UserInterface $user, Request $request, ObjectManager $manager)
     {
-        // verifier que le panier n'est pas vide et que les informations personnelles sont remplis
+        // verifier que les informations pour acceder a cette page sont bien remplis
         $articlesPanier = $user->getPanier()->getArticles();
         $civil = $user->getIdentityUser();
         if($articlesPanier->isEmpty()){
@@ -142,24 +143,100 @@ class CommanderController extends AbstractController
     }
 
     /**
-    * @Route("/payement", name="payement")
+    * @Route("/payement/{choice}", name="payement")
     */
-    public function payement()
+    public function payement($choice = null, UserInterface $user)
     {
+
+    $session = new Session();
+    // récup une session définis
+    $sessionModeLivraison = $session->get('modeLivraison');
+    // verification que les valeurs des sessions existe
+    $modeLivraison = $this->getDoctrine()
+                          ->getRepository(ModeLivraison::class)
+                          ->createQueryBuilder('c')
+                          ->where('c.id = :id')
+                          ->setParameter('id', $sessionModeLivraison);
+
+    // verifier que les informations pour acceder a cette page sont bien remplis
+    $articlesPanier = $user->getPanier()->getArticles();
+    $civil = $user->getIdentityUser();
+    $livraison = $user->getLivraisonUser();
+    if($articlesPanier->isEmpty()){
+        $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si votre panier est vide.');
+        return $this->redirectToRoute('boutique');
+    }else if($civil == null){
+        $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si vos informations personnelles ne sont pas remplies.');
+        return $this->redirectToRoute('commander');
+    }else if($livraison == null){
+        $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si vos informations de livraisons ne sont pas remplies.');
+        return $this->redirectToRoute('livraison');
+    }else if($modeLivraison == null){
+        $this->addFlash('warning', 'Vous devez choisir un mode de livraison.');
+        return $this->redirectToRoute('livraison');
+    }
+
+     // different mode de livraison
+     $repo=$this->getDoctrine()->getRepository(ModePayment::class);
+     $modePayment = $repo->findAll(array(), array('id' => 'asc'));
+
+     if($choice != null){
+        $session->set('modePayment', $choice);
+        return $this->redirectToRoute('valider'); 
+     }
+   
         return $this->render('commander/payement.html.twig', [
             'controller_name' => 'Payement',
-            'title' => 'Payement'
+            'title' => 'Payement',
+            'modePayment' => $modePayment,
         ]);
     }
 
     /**
      * @Route("/valider", name="valider")
      */
-    public function valider()
+    public function valider(UserInterface $user)
     {
+        $session = new Session();
+        // récup une session définis
+        $sessionModeLivraison = $session->get('modeLivraison');
+        $sessionModePayment = $session->get('modePayment');
+        // verification que les valeurs des sessions existe
+        $modeLivraison = $this->getDoctrine()
+                              ->getRepository(ModeLivraison::class)
+                              ->createQueryBuilder('c')
+                              ->where('c.id = :id')
+                              ->setParameter('id', $sessionModeLivraison); 
+        $modePayment = $this->getDoctrine()
+                              ->getRepository(ModePayment::class)
+                              ->createQueryBuilder('c')
+                              ->where('c.id = :id')
+                              ->setParameter('id', $sessionModePayment);
+    
+        // verifier que les informations pour acceder a cette page sont bien remplis
+        $articlesPanier = $user->getPanier()->getArticles();
+        $civil = $user->getIdentityUser();
+        $livraison = $user->getLivraisonUser();
+        if($articlesPanier->isEmpty()){
+            $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si votre panier est vide.');
+            return $this->redirectToRoute('boutique');
+        }else if($civil == null){
+            $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si vos informations personnelles ne sont pas remplies.');
+            return $this->redirectToRoute('commander');
+        }else if($livraison == null){
+            $this->addFlash('warning', 'Vous ne pouvez pas passer de commande si vos informations de livraisons ne sont pas remplies.');
+            return $this->redirectToRoute('livraison');
+        }else if($modeLivraison == null){
+            $this->addFlash('warning', 'Vous devez choisir un mode de livraison.');
+            return $this->redirectToRoute('livraison');
+        }else if($modePayment == null){
+            $this->addFlash('warning', 'Vous devez choisir un mode de Payement.');
+            return $this->redirectToRoute('payement');
+        }
+
         return $this->render('commander/valider.html.twig', [
             'controller_name' => 'Valider',
-            'title' => 'Valider'
+            'title' => 'Valider',
         ]);
     }
 }

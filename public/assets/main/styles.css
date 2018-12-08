@@ -27,13 +27,17 @@
 }
 
 .selectMode{
-    background-color:#f3f3f3;
+    background-color:#e4e4e4;
     width: 80%;
     margin: 10%;
     border-radius: 12px;
 }
 
-p.descriptionLivraison{
+.selectMode:hover{
+    background-color:#cfcfcf;
+}
+
+p.descriptionInfo{
     margin-left: 10%;
     margin-right: 10%;
     padding-bottom: 10%;

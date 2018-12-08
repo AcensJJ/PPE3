@@ -21,6 +21,11 @@ class ModePayment
      */
     private $libelle;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $image;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -34,6 +39,18 @@ class ModePayment
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

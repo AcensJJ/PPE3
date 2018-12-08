@@ -58,11 +58,11 @@
                                         {% for livraison in modeLivraison %}
                                         <div class="field">
                                             <a href="{{ path('livraison', {"choice": livraison.id}) }}">
-                                                <div class="ui modeLivraison selectMode">
+                                                <div class="ui selectMode">
                                                     <div style="text-align: center; margin-bottom: 2%; ">
                                                         <label style="padding-top: 5%; color : hsl(0, 88%, 42%);" > {{ livraison.mode }} </label> 
                                                     </div>
-                                                    <p class="descriptionLivraison"> 
+                                                    <p class="descriptionInfo"> 
                                                         {{ livraison.description }} <br />
                                                         Prix : {{ livraison.prix }}€
                                                     </p>
@@ -106,6 +106,6 @@
 
 {% block javascripts %}
 <script>
-$('.ui.radio.checkbox.modeLivraison').checkbox();
+    $('.ui.radio.checkbox.modeLivraison').checkbox();
 </script>
 {% endblock %}

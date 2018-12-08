@@ -40,15 +40,35 @@
                 </div>
             </div>
 
-            <div class="container" style="max-width: 70%;">
+            <div class="container simple">
                 <div class="row">
                     <div class="col-sm-12">
+                        <div class="box tete-box">
+                                <h3 class="tete-text">Mode de Payement</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
                         <div class="box">
+                            <div class="ui segment" style="margin-bottom: 10px">
+                                <div class="ui form">
+                                    <div class="grouped fields">
+                                        {% for payment in modePayment %}
+                                        <div class="field">
+                                            <a href="{{ path('payement', {"choice": payment.id}) }}">
+                                                <div class="ui selectMode">
+                                                    <img style="margin-left: 40%; margin-bottom: 10%;margin-top: 10%" src="{{ payment.image }}" alt="" width="20%" height="20%"/>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
                             
                         </div>
                     </div>
-                    
                 </div>
+
             </div>
         </div>
 

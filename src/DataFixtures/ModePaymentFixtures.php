@@ -10,9 +10,10 @@ class ModePaymentFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $product = new ModePayment();
-        $product->setLibelle('PayPal');
-        $manager->persist($product);
+        $paypal = new ModePayment();
+        $paypal->setLibelle('PayPal')
+                ->setImage('http://www.websuccessstories.com/wp-content/uploads/2015/03/Paypal.jpg');
+        $manager->persist($paypal);
 
         $manager->flush();
     }
