@@ -65,7 +65,7 @@ class ProduitFixtures extends Fixture
         $cate = $this->getReference('Pantalon');
         $pantalon->setTitre("Pantalon Collection n°$i")
                  ->setDescription("Edition Speciale")
-                 ->setImage("https://media.wuerth.com/stmedia/modyf/shop/900px/2125180.jpg")
+                 ->setImage("https://ol-boutique-cdn-3.azureedge.net/16780-home_default/pantalon-34-entrainement-olympique-lyonnais-adulte-noir-20182019.jpg")
                  ->setPrix("10$i")
                  ->setCategorieProduit($cate);          
         $manager->persist($pantalon);

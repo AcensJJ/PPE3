@@ -151,6 +151,7 @@ class CommanderController extends AbstractController
     $session = new Session();
     // récup une session définis
     $sessionModeLivraison = $session->get('modeLivraison');
+    
     // verification que les valeurs des sessions existe
     $modeLivraison = $this->getDoctrine()
                           ->getRepository(ModeLivraison::class)
@@ -195,7 +196,7 @@ class CommanderController extends AbstractController
     /**
      * @Route("/valider", name="valider")
      */
-    public function valider(UserInterface $user)
+    public function valider(UserInterface $user, ObjectManager $manager)
     {
         $session = new Session();
         // récup une session définis
@@ -234,9 +235,17 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('payement');
         }
 
+        // afficher les informations du client
+        $rawSql =   "SELECT titre, description, image, prix FROM produit AS p WHERE p.panier_id = (SELECT id FROM fos_user AS i WHERE i.id = :iduser)";
+        $stmt = $manager->getConnection()->prepare($rawSql);
+        $stmt->bindValue('iduser', $user->getId());
+        $stmt->execute();
+        $articlesPanier = $stmt->fetchAll();
+
         return $this->render('commander/valider.html.twig', [
             'controller_name' => 'Valider',
             'title' => 'Valider',
+            'articlesPanier' => $articlesPanier,
         ]);
     }
 }
