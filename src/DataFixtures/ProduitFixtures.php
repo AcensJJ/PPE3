@@ -53,7 +53,7 @@ class ProduitFixtures extends Fixture
         $cate = $this->getReference('Veste');
         $veste->setTitre("Veste Collection n°$i")
                  ->setDescription("Edition Speciale")
-                 ->setImage("https://www.decathlon.fr/media/834/8344619/big_8def5110-63c0-431a-97fd-c3ac8ee99a5d.jpg")
+                 ->setImage("https://ol-boutique-cdn-2.azureedge.net/17481-large_default/veste-anthem-ol-adulte-noir-2018-19.jpg")
                  ->setPrix("10$i")
                  ->setCategorieProduit($cate);          
         $manager->persist($veste);
