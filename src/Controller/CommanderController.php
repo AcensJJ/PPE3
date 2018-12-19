@@ -104,16 +104,7 @@ class CommanderController extends AbstractController
             ]);
         }
 
-        // info de livraison de l'user
-        $thisLivraison = $this->getDoctrine()
-                         ->getRepository(LivraisonUser::class)
-                         ->createQueryBuilder('c')
-                         ->where('c.user = :user')
-                         ->setParameter('user', $user)
-                         ->setMaxResults(1)
-                         ->getQuery()
-                         ->getSingleResult();
-
+        
         // different mode de livraison
         $repo=$this->getDoctrine()->getRepository(ModeLivraison::class);
         $modeLivraison = $repo->findAll(array(), array('id' => 'asc'));
@@ -136,7 +127,7 @@ class CommanderController extends AbstractController
         return $this->render('commander/modelivraison.html.twig', [
             'controller_name' => 'Livraison',
             'title' => 'Commander',
-            'infoLivraison' => $thisLivraison,
+            'infoLivraison' => $livraison,
             'modeLivraison' => $modeLivraison,
         ]);
         
@@ -157,7 +148,10 @@ class CommanderController extends AbstractController
                           ->getRepository(ModeLivraison::class)
                           ->createQueryBuilder('c')
                           ->where('c.id = :id')
-                          ->setParameter('id', $sessionModeLivraison);
+                          ->setParameter('id', $sessionModeLivraison)
+                          ->setMaxResults(1)
+                          ->getQuery()
+                          ->getSingleResult();
 
     // verifier que les informations pour acceder a cette page sont bien remplis
     $articlesPanier = $user->getPanier()->getArticles();
@@ -207,23 +201,19 @@ class CommanderController extends AbstractController
                               ->getRepository(ModeLivraison::class)
                               ->createQueryBuilder('c')
                               ->where('c.id = :id')
-                              ->setParameter('id', $sessionModeLivraison); 
-                              
+                              ->setParameter('id', $sessionModeLivraison)
+                              ->setMaxResults(1)
+                              ->getQuery()
+                              ->getSingleResult();
+
         $modePayment = $this->getDoctrine()
                              ->getRepository(ModePayment::class)
                              ->createQueryBuilder('c')
                              ->where('c.id = :id')
-                             ->setParameter('id', $sessionModePayment);
-
-        // info de livraison de l'user
-        $thisLivraison = $this->getDoctrine()
-                              ->getRepository(LivraisonUser::class)
-                              ->createQueryBuilder('c')
-                              ->where('c.user = :user')
-                              ->setParameter('user', $user)
-                              ->setMaxResults(1)
-                              ->getQuery()
-                              ->getSingleResult();
+                             ->setParameter('id', $sessionModePayment)
+                             ->setMaxResults(1)
+                             ->getQuery()
+                             ->getSingleResult();
     
         // verifier que les informations pour acceder a cette page sont bien remplis
         $articlesPanier = $user->getPanier()->getArticles();
@@ -257,7 +247,10 @@ class CommanderController extends AbstractController
             'controller_name' => 'Valider',
             'title' => 'Valider',
             'articlesPanier' => $articlesPanier,
-            'infoLivraison' => $thisLivraison,
+            'infoLivraison' => $livraison,
+            'infoCivil' => $civil,
+            'modePayement' => $modePayment,
+            'modeLivraison' => $modeLivraison,
         ]);
     }
 }

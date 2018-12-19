@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-                                    <p>Total : {{ totalPrix }}€</p>
+                                    <spam>Total : {{ totalPrix }}€</spam>
 
                                 </div>                          
                             </div>
@@ -76,16 +76,26 @@
                                 <h3 style="text-align: center; center; color: white;">Information Générales</h3>
                             </div>
                             <div class="ui segment" style="margin-bottom: 10px">
-                                <label for="mode" style="color: #969696;">Civil:</label>
+                                <label style="color: black;">Civil :</label><br /><br />
                                  <p> 
+                                    Nom : {{ infoCivil.nom }} <br />
+                                    Prenom :  {{ infoCivil.prenom }} <br />
+                                    Tel : {{ infoCivil.numTel }} <br />
+                                    Email : {{ infoCivil.email }} <br />
+                                </p><br />
+                                <label style="color: black;">Livraison :</label><br /><br />
+                                <p> 
                                     Adresse de livraison : {{ infoLivraison.adresse }} <br />
-                                    
                                     Ville :  {{ infoLivraison.ville }} {{ infoLivraison.pays }} <br />
                                     Code Postal : {{ infoLivraison.codePostal }} <br />
-                                </p>
-                                <label for="mode" style="color: #969696;">Livraison:</label>
-
-
+                                </p><br />
+                                <label style="color: black;">Mode de Livraison : {{ modeLivraison.mode }}</label><br /><br />
+                                <p> 
+                                    Prix : {{ modeLivraison.prix }} <br />
+                                    {% set totalPrix = totalPrix + modeLivraison.prix %}
+                                </p><br />
+                                <label style="color: black;">Mode de Payement : {{ modePayement.libelle }}</label><br /><br />
+                                <label style="color: black;">Total : {{ totalPrix }}€</label><br /><br />
                                 <div class="ui checkbox">
                                 </div>
                                 <div> 
