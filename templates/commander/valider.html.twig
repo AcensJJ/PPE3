@@ -4,8 +4,6 @@
 
 <div class="super_container">
 
- {{dump(articlesPanier)}}
-
 	<div class="super_container_inner">
 		<div class="super_overlay"></div>
         <div class="products">
@@ -48,21 +46,51 @@
 
                     <div class="ui grid">
                         <div class="left floated six wide column" style="margin-left: 60px;">
+                            <div class="ui segment" style="margin-bottom: 10px; background: #414141;">
+                                <h3 style="text-align: center; color: white;">Recapitulatif de la commande</h3>
+                            </div>
                             <div class="ui segment" style="margin-bottom: 10px">
 
                                 <div class="ui form">
                                     
-                                    <div class="grouped fields">
-                                      aaa
-                                            
-                                        
+                                    {% set totalPrix = 0 %}
+                                    {% for article in articlesPanier %}
+                                    {% set totalPrix = totalPrix + article.prix %}
+                                    <div style="text-align: center; padding-bottom: 5%;">
+                                        <div>
+                                            <img src="{{ article.image }}" alt="" width="40%" height="40%">
+                                        </div>
+                                        <div>
+                                            <p>{{ article.titre }}</p>
+                                            <span>Prix : </span>{{ article.prix }}€
+                                        </div>
                                     </div>
+                                    {% endfor %}
+                                    <p>Total : {{ totalPrix }}€</p>
+
                                 </div>                          
                             </div>
                         </div>
                         <div class="right floated six wide column" style="margin-right: 60px;">
+                            <div class="ui segment" style="margin-bottom: 10px; background: #414141;">
+                                <h3 style="text-align: center; center; color: white;">Information Générales</h3>
+                            </div>
                             <div class="ui segment" style="margin-bottom: 10px">
-                               aaaa
+                                <label for="mode" style="color: #969696;">Civil:</label>
+                                 <p> 
+                                    Adresse de livraison : {{ infoLivraison.adresse }} <br />
+                                    
+                                    Ville :  {{ infoLivraison.ville }} {{ infoLivraison.pays }} <br />
+                                    Code Postal : {{ infoLivraison.codePostal }} <br />
+                                </p>
+                                <label for="mode" style="color: #969696;">Livraison:</label>
+
+
+                                <div class="ui checkbox">
+                                </div>
+                                <div> 
+                                    <a href=""><input class="ui button" type="submit" id="modifier" value="Valider"/></a>
+                                </div>
                             </div>
                         </div>
                     </div>

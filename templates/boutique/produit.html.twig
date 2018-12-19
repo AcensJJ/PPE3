@@ -16,12 +16,11 @@
 							<div class="products_bar_links">
 								<!-- Categorie nav -->
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li><a>Tout</a></li>
-									<li><a>T-Shirt</a></li>
-									<li><a>Pull</a></li>
-									<li><a>Veste</a></li>
-									<li><a>Pantalon</a></li>
-									<li><a>Short</a></li>
+									<li><a href="{{ path('produit') }}">Tout</a></li>
+									{% for cate in categories %} 
+									<li><a href="{{ path('produit', {"idcate": cate.id}) }}">{{ cate.libelle }}</a></li>
+									{% endfor %}
+									
 								</ul>
 							</div>
 							<div class="products_bar_side d-flex flex-row align-items-center justify-content-start ml-lg-auto">

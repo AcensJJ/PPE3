@@ -208,11 +208,22 @@ class CommanderController extends AbstractController
                               ->createQueryBuilder('c')
                               ->where('c.id = :id')
                               ->setParameter('id', $sessionModeLivraison); 
+                              
         $modePayment = $this->getDoctrine()
-                              ->getRepository(ModePayment::class)
+                             ->getRepository(ModePayment::class)
+                             ->createQueryBuilder('c')
+                             ->where('c.id = :id')
+                             ->setParameter('id', $sessionModePayment);
+
+        // info de livraison de l'user
+        $thisLivraison = $this->getDoctrine()
+                              ->getRepository(LivraisonUser::class)
                               ->createQueryBuilder('c')
-                              ->where('c.id = :id')
-                              ->setParameter('id', $sessionModePayment);
+                              ->where('c.user = :user')
+                              ->setParameter('user', $user)
+                              ->setMaxResults(1)
+                              ->getQuery()
+                              ->getSingleResult();
     
         // verifier que les informations pour acceder a cette page sont bien remplis
         $articlesPanier = $user->getPanier()->getArticles();
@@ -246,6 +257,7 @@ class CommanderController extends AbstractController
             'controller_name' => 'Valider',
             'title' => 'Valider',
             'articlesPanier' => $articlesPanier,
+            'infoLivraison' => $thisLivraison,
         ]);
     }
 }

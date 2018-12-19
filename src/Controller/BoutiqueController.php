@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Panier;
 use App\Entity\Produit;
 use Doctrine\ORM\Query;
+use App\Entity\Categorie;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,16 +37,31 @@ class BoutiqueController extends AbstractController
     }
 
     /**
-     * @Route("/produit", name="produit")
+     * @Route("/produit/{idcate}", name="produit")
      */
-    public function produit(){
+    public function produit($idcate = null, ObjectManager $manager){
 
         $repo=$this->getDoctrine()->getRepository(Produit::class);
         $produit=$repo->findAll();
 
+        $repo = $this->getDoctrine()->getRepository(Categorie::class);
+        $categories = $repo->findAll();
+
+       
+        if($idcate!= null){
+
+            $rawSql =   "SELECT * FROM produit WHERE categorie_produit_id = :idcategories";
+            $stmt = $manager->getConnection()->prepare($rawSql);
+            $stmt->bindValue('idcategories', $idcate);
+            $stmt->execute();
+            $produit = $stmt->fetchAll();
+        }
+
+
         return $this->render('boutique/produit.html.twig',[
             'controller_name'=> 'Les articles',
             'produit' => $produit,
+            'categories'=>$categories,
             ]);
     }
 
