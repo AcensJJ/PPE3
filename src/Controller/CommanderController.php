@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommanderController extends AbstractController
 {
     /**
-    * @Route("/commander", name="commander")
+    * @Route("/commande/civil", name="civil")
     */
     public function index(UserInterface $user, Request $request, ObjectManager $manager)
     {
@@ -50,7 +50,7 @@ class CommanderController extends AbstractController
         }
 
         return $this->render('commander/information.html.twig', [
-            'controller_name' => 'Commander',
+            'controller_name' => 'Civil',
             'form' => $form->createView(),
             'title' => 'Commander'
         ]); 
@@ -134,7 +134,7 @@ class CommanderController extends AbstractController
     }
 
     /**
-    * @Route("/payement/{choice}", name="payement")
+    * @Route("/commande/payement/{choice}", name="payement")
     */
     public function payement($choice = null, UserInterface $user)
     {
@@ -182,13 +182,13 @@ class CommanderController extends AbstractController
    
         return $this->render('commander/payement.html.twig', [
             'controller_name' => 'Payement',
-            'title' => 'Payement',
+            'title' => 'Commander',
             'modePayment' => $modePayment,
         ]);
     }
 
     /**
-     * @Route("/valider", name="valider")
+     * @Route("/commande/valider", name="valider")
      */
     public function valider(UserInterface $user, ObjectManager $manager)
     {
@@ -245,12 +245,24 @@ class CommanderController extends AbstractController
 
         return $this->render('commander/valider.html.twig', [
             'controller_name' => 'Valider',
-            'title' => 'Valider',
+            'title' => 'Commander',
             'articlesPanier' => $articlesPanier,
             'infoLivraison' => $livraison,
             'infoCivil' => $civil,
             'modePayement' => $modePayment,
             'modeLivraison' => $modeLivraison,
+        ]);
+    }
+
+    /**
+    * @Route("/commande/terminer", name="terminer")
+    */
+    public function terminer()
+    {
+
+        return $this->render('commander/finish.html.twig', [
+            'controller_name' => 'Terminé',
+            'title' => 'Commander',
         ]);
     }
 }
