@@ -48,6 +48,11 @@ class Produit
      */
     private $panier;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\CommandeOrder", inversedBy="article")
+     */
+    private $commandeOrder;
+
     public function __construct()
     {
         $this->userId = new ArrayCollection();
@@ -128,6 +133,18 @@ class Produit
     public function setPanier(?Panier $panier): self
     {
         $this->panier = $panier;
+
+        return $this;
+    }
+
+    public function getCommandeOrder(): ?CommandeOrder
+    {
+        return $this->commandeOrder;
+    }
+
+    public function setCommandeOrder(?CommandeOrder $commandeOrder): self
+    {
+        $this->commandeOrder = $commandeOrder;
 
         return $this;
     }

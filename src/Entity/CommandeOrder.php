@@ -55,9 +55,21 @@ class CommandeOrder
      */
     private $livraison;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\PaymentOrder", inversedBy="commandeOrder", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $paymentOrder;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Produit", mappedBy="commandeOrder")
+     */
+    private $article;
+
     public function __construct()
     {
         $this->relation = new ArrayCollection();
+        $this->article = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,4 +172,46 @@ class CommandeOrder
 
         return $this;
     }
+
+    public function getPaymentOrder(): ?PaymentOrder
+    {
+        return $this->paymentOrder;
+    }
+    public function setPaymentOrder(PaymentOrder $paymentOrder): self
+    {
+        $this->paymentOrder = $paymentOrder;
+        return $this;
+    }
+
+    /**
+     * @return Collection|Produit[]
+     */
+    public function getArticle(): Collection
+    {
+        return $this->article;
+    }
+
+    public function addArticle(Produit $article): self
+    {
+        if (!$this->article->contains($article)) {
+            $this->article[] = $article;
+            $article->setCommandeOrder($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticle(Produit $article): self
+    {
+        if ($this->article->contains($article)) {
+            $this->article->removeElement($article);
+            // set the owning side to null (unless already changed)
+            if ($article->getCommandeOrder() === $this) {
+                $article->setCommandeOrder(null);
+            }
+        }
+
+        return $this;
+    }
+    
 }
