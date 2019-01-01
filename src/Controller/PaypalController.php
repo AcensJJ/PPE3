@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 class PaypalController extends AbstractController
 {
     /**
@@ -42,8 +43,8 @@ class PaypalController extends AbstractController
         //Initialisation payment paypal
         $payer = new PayPalPayment();
         $payer->setSandboxMode(1);
-        $payer->setClientID("AW2Ur-EOSNaMkf0sBU39tZiMjcK-FIWYmiZHhXzVNF2sYrQkc6hgw7VE-jdmbVQSadkX8NsaYPWbQ8Td");
-        $payer->setSecret("EPkj7CqKdISgHN7Xf84KFT0hXTBJYJN55gR8PAJs4ve1KBKmhi3w_fzZdRxCJdWK3UxjAdzwSdZXzfx_");
+        $payer->setClientID("AXvr12zigL83ygds4t4Ff8YzVklw0hLFggq2FQY6XhXAMT-smVEZAWlHJFo_zP6cLGOQgpMF4qQ01EcW");
+        $payer->setSecret("EJsxAIhkd_wy4VfUv4G6vKVzJNNhVXM3vhl9zFcvHcH6H-G8uqTE8W3hLdxz5rqb4Ro_JAYFNGPQKN_o");
 
         //Contenu de la transaction pour paypal
         $totalPrix = 0;
@@ -125,8 +126,8 @@ class PaypalController extends AbstractController
         if (!empty($paymentID) AND !empty($payerID)) {
             $payer = new PayPalPayment();
             $payer->setSandboxMode(1);
-            $payer->setClientID("AW2Ur-EOSNaMkf0sBU39tZiMjcK-FIWYmiZHhXzVNF2sYrQkc6hgw7VE-jdmbVQSadkX8NsaYPWbQ8Td");
-            $payer->setSecret("EPkj7CqKdISgHN7Xf84KFT0hXTBJYJN55gR8PAJs4ve1KBKmhi3w_fzZdRxCJdWK3UxjAdzwSdZXzfx_");
+            $payer->setClientID("AXvr12zigL83ygds4t4Ff8YzVklw0hLFggq2FQY6XhXAMT-smVEZAWlHJFo_zP6cLGOQgpMF4qQ01EcW");
+            $payer->setSecret("EJsxAIhkd_wy4VfUv4G6vKVzJNNhVXM3vhl9zFcvHcH6H-G8uqTE8W3hLdxz5rqb4Ro_JAYFNGPQKN_o");
             $repo = $this->getDoctrine()->getRepository(PaymentOrder::class);
             $paymentOrder = $repo->createQueryBuilder('c')
                                  ->where('c.paymentId = :paymentId')

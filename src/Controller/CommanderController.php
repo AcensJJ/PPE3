@@ -57,7 +57,7 @@ class CommanderController extends AbstractController
     }
 
     /**
-     * @Route("/livraison/{choice}", name="livraison")
+     * @Route("/commande/livraison/{choice}", name="livraison")
      */
     public function livraison($choice = null, UserInterface $user, Request $request, ObjectManager $manager)
     {
