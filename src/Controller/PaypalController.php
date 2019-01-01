@@ -43,8 +43,8 @@ class PaypalController extends AbstractController
         //Initialisation payment paypal
         $payer = new PayPalPayment();
         $payer->setSandboxMode(1);
-        $payer->setClientID("AXvr12zigL83ygds4t4Ff8YzVklw0hLFggq2FQY6XhXAMT-smVEZAWlHJFo_zP6cLGOQgpMF4qQ01EcW");
-        $payer->setSecret("EJsxAIhkd_wy4VfUv4G6vKVzJNNhVXM3vhl9zFcvHcH6H-G8uqTE8W3hLdxz5rqb4Ro_JAYFNGPQKN_o");
+        $payer->setClientID("AVJ-jQhi2j33qieUgiUIWW7-Ajw5vXM347w5TdE6tdTgRNcj2prUVvKfRDO-nojCBl25TTfHuApaBnbE");
+        $payer->setSecret("ELePGx4jxRIhM7AYHR_J2Ah3bFxLE0d6nnz_ez6iEKNxlrd1QgzGGEi4V7AcItS2_3gujHqaaqZ9NBSg");
 
         //Contenu de la transaction pour paypal
         $totalPrix = 0;
@@ -105,7 +105,7 @@ class PaypalController extends AbstractController
             $success = 1;
             $msg = "";
         } else {
-        $msg = "Une erreur est survenue durant la communication avec les serveurs de PayPal. Merci de bien vouloir réessayer ultérieurement.";
+        $msg = "Une erreur est survenue durant la communication avec les serveurs de PayPal. Merci de bien vouloir réessayer ultérieurement. (ERROR PAYP03)";
         }
         return new JsonResponse(["success" => $success, "msg" => $msg, "paypal_response" => $paypal_response]);
     }
@@ -126,8 +126,8 @@ class PaypalController extends AbstractController
         if (!empty($paymentID) AND !empty($payerID)) {
             $payer = new PayPalPayment();
             $payer->setSandboxMode(1);
-            $payer->setClientID("AXvr12zigL83ygds4t4Ff8YzVklw0hLFggq2FQY6XhXAMT-smVEZAWlHJFo_zP6cLGOQgpMF4qQ01EcW");
-            $payer->setSecret("EJsxAIhkd_wy4VfUv4G6vKVzJNNhVXM3vhl9zFcvHcH6H-G8uqTE8W3hLdxz5rqb4Ro_JAYFNGPQKN_o");
+            $payer->setClientID("AXFVKVzIJWsAegs8J8hHXJhA0YOCh8vQ6qXwFizOXCi99PFmCq_4ewwNi8nYHqzBmJpNA3NGpufMgpB6");
+            $payer->setSecret("ELePGx4jxRIhM7AYHR_J2Ah3bFxLE0d6nnz_ez6iEKNxlrd1QgzGGEi4V7AcItS2_3gujHqaaqZ9NBSg");
             $repo = $this->getDoctrine()->getRepository(PaymentOrder::class);
             $paymentOrder = $repo->createQueryBuilder('c')
                                  ->where('c.paymentId = :paymentId')
@@ -208,5 +208,99 @@ class PaypalController extends AbstractController
             }
         }
         return new JsonResponse(["success" => $success, "msg" => $msg, "paypal_response" => $paypal_response]);
+    }
+
+    /**
+     * @Route("/paypal/valider", name="paypal_valider")
+     */
+    public function paypal_valider(UserInterface $user, Request $request, ObjectManager $manager)
+    {
+
+        $session = new Session();
+        // récup la valeur de la livraison
+        $sessionModeLivraison = $session->get('modeLivraison');
+        $modeLivraison = $this->getDoctrine()
+                              ->getRepository(ModeLivraison::class)
+                              ->createQueryBuilder('c')
+                              ->where('c.id = :id')
+                              ->setParameter('id', $sessionModeLivraison)
+                              ->setMaxResults(1)
+                              ->getQuery()
+                              ->getSingleResult();
+                              
+        //Contenu de la transaction pour paypal
+        $totalPrix = 0;
+        $myArticles = $user->getPanier();
+        foreach ($myArticles as $article) {
+            $totalPrix = $totalPrix + $article->getArticles()->getPrix();
+        }
+
+        // Prix de livraison
+        $totalPrix = $totalPrix + $modeLivraison->getPrix();
+        $totalPrix = strval($totalPrix); //INT TO STR
+
+
+        $paymentOrder = new PaymentOrder();
+        $paymentOrder->setPaymentId("Pour le Paypal");
+        $paymentOrder->setStatus("approved");
+        $paymentOrder->setAmount($totalPrix);
+        $paymentOrder->setCurrency("EUR");
+        $paymentOrder->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
+        $manager->persist($paymentOrder);
+        $manager->flush();
+    
+        //Création IdentityOrder
+        $identityOrder = new IdentityOrder();
+        $identityUser = $user->getIdentityUser();
+        $identityOrder->setPrenom($identityUser->getPrenom())
+                        ->setNom($identityUser->getNom())
+                        ->setEmail($identityUser->getEmail())
+                        ->setNumTel($identityUser->getNumTel());
+        $manager->persist($identityOrder);
+
+        //Création LivraisonOrder
+        $livraisonOrder = new LivraisonOrder();
+        $livraisonUser = $user->getLivraisonUser();
+        $livraisonOrder->setAdresse($livraisonUser->getAdresse())
+                        ->setPays($livraisonUser->getPays())
+                        ->setVille($livraisonUser->getVille())
+                        ->setCodePostal($livraisonUser->getCodePostal());
+        $manager->persist($livraisonOrder);
+
+        //Création de la commande
+        $ref = new UniqRef();
+        $reference = $ref->generateRef();
+        $dateNow = date('Y-m-d H:i:s');
+        $session = new Session();
+        $sessionModeLivraison = $session->get('modeLivraison');
+        $repolivraison = $this->getDoctrine()->getRepository(ModeLivraison::class);
+        $modeLivraison = $repolivraison->find($sessionModeLivraison);
+
+        $commande = new CommandeOrder();
+        $commande->setReference($reference)
+                    ->setStatus('En attente')
+                    ->setDate(\DateTime::createFromFormat('Y-m-d H:i:s', $dateNow))
+                    ->setUser($user)
+                    ->setLivraison($livraisonOrder)
+                    ->setIdentity($identityOrder)
+                    ->setPaymentOrder($paymentOrder)
+                    ->setModeLivraison($modeLivraison);
+        $articlesPanier = $user->getPanier();
+        foreach ($articlesPanier as $articlePanier) {
+            $commande->addArticle($articlePanier);
+            $articlesPanier->removeArticle($articlePanier);
+        }
+        $manager->persist($commande);
+        $manager->flush();
+        $manager->persist($articlesPanier);
+        $manager->flush();
+
+        //Delete Sessions
+        $session->set('modePayment', null);
+        $session->set('modeLivraison', null);
+        //Create Session def commande
+        $session->set('commandeOrder', $commande);
+         
+        return $this->redirectToRoute('terminer');
     }
 }
