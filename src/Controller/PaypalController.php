@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Panier;
+use App\Entity\Produit;
 use App\Entity\PaymentOrder;
 use App\Entity\CommandeOrder;
 use App\Entity\IdentityOrder;
@@ -48,9 +50,10 @@ class PaypalController extends AbstractController
 
         //Contenu de la transaction pour paypal
         $totalPrix = 0;
-        $myArticles = $user->getPanier();
+        $thisPanier = $user->getPanier();
+        $myArticles = $thisPanier->getArticles();
         foreach ($myArticles as $article) {
-            $totalPrix = $totalPrix + $article->getArticles()->getPrix();
+            $totalPrix = $totalPrix + $article->getPrix();
         }
 
         // Prix de livraison
@@ -80,10 +83,10 @@ class PaypalController extends AbstractController
         ];
 
         foreach ($myArticles as $key => $article) {
-            $thisPrix = strval($article->getArticles()->getPrix()); //INT TO STR;
+            $thisPrix = strval($article->getPrix()); //INT TO STR;
             $item = [
                 "sku" => "1PK5Z9",
-                "name" => $article->getArticles()->getTitre(),
+                "name" => $article->getTitre(),
                 "price" => $thisPrix,
                 "currency" => "EUR"
             ];
@@ -182,16 +185,20 @@ class PaypalController extends AbstractController
                              ->setIdentity($identityOrder)
                              ->setPaymentOrder($paymentOrder)
                              ->setModeLivraison($modeLivraison);
-                    $articlesPanier = $user->getPanier();
-                    foreach ($articlesPanier as $articlePanier) {
-                        $commande->addArticle($articlePanier);
-                        $articlesPanier->removeArticle($articlePanier);
+                    
+                    // recuperer le panier
+                    $thisPanier = $user->getPanier();
+                    $articlesPanier = $thisPanier->getArticles();
+                    foreach ($articlesPanier as $article) {
+                        // ajouter les articles du panier à la commande
+                        $commande->addArticle($article);
+                        // vider le panier
+                        $thisPanier->removeArticle($article);
+                        $manager->persist($thisPanier);
                     }
                     $manager->persist($commande);
                     $manager->flush();
-                    $manager->persist($articlesPanier);
-                    $manager->flush();
-
+                
                     //Delete Sessions
                     $session->set('modePayment', null);
                     $session->set('modeLivraison', null);
@@ -230,9 +237,10 @@ class PaypalController extends AbstractController
                               
         //Contenu de la transaction pour paypal
         $totalPrix = 0;
-        $myArticles = $user->getPanier();
+        $thisPanier = $user->getPanier();
+        $myArticles = $thisPanier->getArticles();
         foreach ($myArticles as $article) {
-            $totalPrix = $totalPrix + $article->getArticles()->getPrix();
+            $totalPrix = $totalPrix + $article->getPrix();
         }
 
         // Prix de livraison
@@ -285,14 +293,19 @@ class PaypalController extends AbstractController
                     ->setIdentity($identityOrder)
                     ->setPaymentOrder($paymentOrder)
                     ->setModeLivraison($modeLivraison);
-        $articlesPanier = $user->getPanier();
-        foreach ($articlesPanier as $articlePanier) {
-            $commande->addArticle($articlePanier);
-            $articlesPanier->removeArticle($articlePanier);
+
+                    
+        // recuperer le panier
+        $thisPanier = $user->getPanier();
+        $articlesPanier = $thisPanier->getArticles();
+        foreach ($articlesPanier as $article) {
+            // ajouter les articles du panier à la commande
+            $commande->addArticle($article);
+            // vider le panier
+            $thisPanier->removeArticle($article);
+            $manager->persist($thisPanier);
         }
         $manager->persist($commande);
-        $manager->flush();
-        $manager->persist($articlesPanier);
         $manager->flush();
 
         //Delete Sessions

@@ -3,16 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Panier;
+use App\Entity\ModePayment;
 use App\Entity\IdentityUser;
+use App\Entity\CommandeOrder;
 use App\Entity\LivraisonUser;
 use App\Entity\ModeLivraison;
-use App\Entity\ModePayment;
 use App\Form\IdentityUserType;
 use App\Form\LivraisonUserType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -143,7 +144,7 @@ class CommanderController extends AbstractController
     // récup une session définis
     $sessionModeLivraison = $session->get('modeLivraison');
     
-    // verification que les valeurs des sessions existe
+    // verification que les valeurs des sessions existes
     $modeLivraison = $this->getDoctrine()
                           ->getRepository(ModeLivraison::class)
                           ->createQueryBuilder('c')
@@ -196,7 +197,7 @@ class CommanderController extends AbstractController
         // récup une session définis
         $sessionModeLivraison = $session->get('modeLivraison');
         $sessionModePayment = $session->get('modePayment');
-        // verification que les valeurs des sessions existe
+        // verification que les valeurs des sessions existes
         $modeLivraison = $this->getDoctrine()
                               ->getRepository(ModeLivraison::class)
                               ->createQueryBuilder('c')
@@ -257,9 +258,20 @@ class CommanderController extends AbstractController
     /**
     * @Route("/commande/terminer", name="terminer")
     */
-    public function terminer()
+    public function terminer(UserInterface $user)
     {
 
+        $session = new Session();
+        // récup une session définis
+        $sessionCommandeOrder = $session->get('commandeOrder');
+
+        if($sessionCommandeOrder != null){
+            $session->set('commandeOrder', null);
+        } else{
+            $this->addFlash('warning');
+            return $this->redirectToRoute('panier');
+        }
+        
         return $this->render('commander/finish.html.twig', [
             'controller_name' => 'Terminé',
             'title' => 'Commander',
