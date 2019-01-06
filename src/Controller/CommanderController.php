@@ -237,13 +237,6 @@ class CommanderController extends AbstractController
             return $this->redirectToRoute('payement');
         }
 
-        // afficher les informations du client
-        $rawSql =   "SELECT titre, description, image, prix FROM produit AS p WHERE p.panier_id = (SELECT id FROM fos_user AS i WHERE i.id = :iduser)";
-        $stmt = $manager->getConnection()->prepare($rawSql);
-        $stmt->bindValue('iduser', $user->getId());
-        $stmt->execute();
-        $articlesPanier = $stmt->fetchAll();
-
         return $this->render('commander/valider.html.twig', [
             'controller_name' => 'Valider',
             'title' => 'Commander',
