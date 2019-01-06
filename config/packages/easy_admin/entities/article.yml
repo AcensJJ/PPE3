@@ -8,9 +8,9 @@ easy_admin:
               fields:
                   - { type: 'section', label: 'Informations principales' }
                   - { property: 'titre', label: 'Titre' }
-                  - { property: 'content', label: 'Description' }
+                  - { property: 'description', label: 'Description' }
                   - { type: 'divider' }
-                  - { property: 'categorieProduit', label: 'Catégorie', type_options: { class: 'App\Entity\Category' } }
+                  - { property: 'categorieProduit', label: 'Catégorie',type: 'easyadmin_autocomplete', type_options: { class: 'App\Entity\Categorie' } }
                   - { property: 'prix', label: 'Prix', type: 'money', type_options: { currency: 'EUR' } }
                   - { type: 'divider' }
 
@@ -21,6 +21,6 @@ easy_admin:
               fields:
                   - { property: 'titre', label: 'Titre' }
                   - { property: 'prix', label: 'Prix'}
-                  - { property: 'categorie.title', label: 'Catégorie' }
+                  - { property: 'categorieProduit.libelle', label: 'Catégorie' }
           search:
             fields: ['titre']

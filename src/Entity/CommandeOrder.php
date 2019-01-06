@@ -34,7 +34,8 @@ class CommandeOrder
     private $status;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="commandeOrders")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 

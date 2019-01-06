@@ -1,7 +1,7 @@
 easy_admin:
    entities:
        User :
-        #   disabled_actions: ['new']
+          disabled_actions: ['new']
           class: App\Entity\User
           label: 'Utilisateurs'
           edit:
@@ -10,47 +10,27 @@ easy_admin:
                   - { type: 'tab' , label: 'Informations utilisateur', icon: 'lock' }
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'email', label: "Email", type: 'email' }
-                  # - { property: 'plainPassword', type_options: { required: true}, type: 'password' }
                   - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'Utilisateur': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Super administrateur': 'ROLE_SUPER_ADMIN' } } }
                   - { property: 'enabled', label: 'Activation' }
               form_options: { validation_groups: ['Profile'] }
-          new:
-              role: ROLE_SUPER_ADMIN4
-              title: 'Ajouter un utilisateur'
-              fields:
-                  - { type: 'section' , label: 'Informations obligatoires', icon: 'lock' }
-                  - { property: 'username', label: 'Pseudo' }
-                  - { property: 'email', label: "Email", type: 'email' }
-                  - { property: 'plainPassword', type_options: { required: true}, type: 'password' }
-                  - { property: 'roles', type: 'choice', role: ROLE_SUPER_ADMIN, type_options: { multiple: true, choices: { 'Utilisateur': 'ROLE_USER', 'Administrateur': 'ROLE_ADMIN', 'Super administrateur': 'ROLE_SUPER_ADMIN' } } }
-              form_options: { validation_groups: ['Registration'] }
           show:
               fields:
                   - { property: 'username', label: 'Pseudo' }
                   - { property: 'email', label: "Email", type: 'email' }
                   - { property: 'lastLogin', label: 'Dernière connexion' }
-                  - { property: 'Panier', label: 'Articles dans son panier (Commandés ou non)' }
-                  - { property: 'facturationUser', label: 'Informations sur la facturation' }
                   - { property: 'livraisonUser', label: 'Informations sur la livraison' }
                   - { property: 'identityUser', label: 'Informations identitaires' }
-                  - { property: 'commandeOrders', label: 'Commandes passées' }
                   - { property: 'roles', label: 'Role(s)' }
                   - { property: 'enabled', label: 'Activation' }
               actions:
-                    # - { name: 'viewFacturation', type: 'route', icon: 'plus-square',  css_class : 'btn btn-warning', label: "Voir les informations de facturation"}
-                    # - { name: 'viewFacturation', type: 'route', icon: 'plus-square',  css_class : 'btn btn-warning', label: "Voir les informations de livraison"}
-                    # - { name: 'viewFacturation', icon: 'plus-square',  css_class : 'btn btn-warning', label: "Voir les informations identitaire"}
-
           list:
               sort: ['id', 'DESC']
               title: "Liste des %%entity_label%%"
               fields:
                   - { property: 'enabled', label: 'Activation' }
                   - { property: 'username', label: 'Pseudo' }
-                #   - { property: 'identityUser.allName', label: 'Nom complet' }
                   - { property: 'email', label: 'Email', type: 'email'}
-                #   - { property: 'identityUser.telephone', label: 'Téléphone', type: 'tel'}
                   - { property: 'lastLogin', label: 'Dernière connexion' }
                   - { property: 'roles', label: 'Role(s)' }
           search:
-            fields: ['username', identityUser.prenom, identityUser.nom, 'email', 'roles', 'enabled']
+            fields: ['username', 'email', 'roles', 'enabled']

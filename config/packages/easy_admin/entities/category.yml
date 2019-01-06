@@ -1,6 +1,7 @@
 easy_admin:
    entities:
        Category :
+          disabled_actions: ['edit', 'show']
           class: App\Entity\Categorie
           label: 'Catégories'
           list:
@@ -11,6 +12,5 @@ easy_admin:
               title: "Liste des %%entity_label%%"
               fields:
                   - { property: 'libelle', label: 'Titre' }
-                  - { property: 'produits', label: "Articles liée" }
           search:
             fields: ['libelle']

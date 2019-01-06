@@ -41,6 +41,10 @@ class LivraisonUser
      */
     private $user;
 
+    public function __toString() {
+        return (string) "Voir l'adresse de livraison";
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

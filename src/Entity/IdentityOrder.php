@@ -41,6 +41,10 @@ class IdentityOrder
      */
     private $commandeOrder;
 
+    public function __toString() {
+        return (string) "Voir les informations identitaire";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

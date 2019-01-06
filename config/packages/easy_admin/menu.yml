@@ -5,15 +5,15 @@ easy_admin:
           - label: "Gestion d'utilisateurs"
             icon: 'users'
             children:
-                - { entity: 'User', role: ROLE_SUPER_ADMIN, label: 'Utilisateurs', icon: 'users' }
+                - { entity: 'User', role: ROLE_SUPER_ADMIN, label: 'Utilisateurs', icon: 'user' }
           - label: "Gestion d'inventaire"
-            icon: 'users'
+            icon: 'shopping-cart'
             children:
-                - { entity: 'Article', label: 'Produits', icon: 'file-text' }
+                - { entity: 'Article', label: 'Produits', icon: 'product-hunt' }
                 - { entity: 'Category', label: 'Catégories', icon: 'tag' }
           - label: "Gestion des commandes"
-            icon: 'users'
+            icon: 'archive'
             children:
-                - { entity: 'CommandeOrder', label: 'Commandes', icon: 'file-text' }
+                - { entity: 'CommandeOrder', label: 'Commandes', icon: 'bar-chart' }
           - { label: 'Raccourcis' }
-          - { label: 'Retour au site', url: '/', rel: 'index' }
+          - { label: 'Retour au site', url: '/', rel: 'index', icon: 'undo' }

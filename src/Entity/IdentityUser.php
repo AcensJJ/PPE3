@@ -41,6 +41,10 @@ class IdentityUser
      */
     private $user;
 
+    public function __toString() {
+        return (string) "Voir les informations identitaire";
+    }
+
     public function getId(): ?int
     {
         return $this->id;

@@ -38,6 +38,15 @@ class LivraisonOrder
      */
     private $pays;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\CommandeOrder", mappedBy="livraison", cascade={"persist", "remove"})
+     */
+    private $commandeOrder;
+
+    public function __toString() {
+        return (string) "Voir l'adresse de livraison";
+    }
+
     public function getId(): ?int
     {
         return $this->id;
