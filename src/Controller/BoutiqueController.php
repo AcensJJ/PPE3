@@ -7,6 +7,8 @@ use App\Entity\Panier;
 use App\Entity\Produit;
 use Doctrine\ORM\Query;
 use App\Entity\Categorie;
+use App\Entity\PaymentOrder;
+use App\Entity\CommandeOrder;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
@@ -97,13 +99,13 @@ class BoutiqueController extends AbstractController
         }
 
         $thisPanier = $this->getDoctrine()
-                         ->getRepository(Panier::class)
-                         ->createQueryBuilder('c')
-                         ->where('c.user = :user')
-                         ->setParameter('user', $user)
-                         ->setMaxResults(1)
-                         ->getQuery()
-                         ->getSingleResult();
+                           ->getRepository(Panier::class)
+                           ->createQueryBuilder('c')
+                           ->where('c.user = :user')
+                           ->setParameter('user', $user)
+                           ->setMaxResults(1)
+                           ->getQuery()
+                           ->getSingleResult();
 
         //IF AJAX REMOVE ARTICLE PANIER
         if($request->isXmlHttpRequest()){
@@ -124,6 +126,24 @@ class BoutiqueController extends AbstractController
         return $this->render('boutique/panier.html.twig', [
             'controller_name' => 'Mon panier',
             'articlesPanier' => $thisPanier,
+            ]);          
+    }
+
+    /**
+     * @Route("/historique", name="historique")
+     */
+    public function historique(UserInterface $user, Request $request, ObjectManager $manager)
+    {
+        $rawSql =   "SELECT * FROM commande_order WHERE user_id = :utilisateur";
+        $stmt = $manager->getConnection()->prepare($rawSql);
+        $utilisateur = $user->getId();
+        $stmt->bindValue('utilisateur', $utilisateur);
+        $stmt->execute();
+        $commande = $stmt->fetchAll();
+        
+        return $this->render('boutique/historique.html.twig', [
+            'controller_name' => 'Mes achats',
+            'commande' => $commande,
             ]);          
     }
 }

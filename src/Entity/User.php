@@ -33,9 +33,15 @@ class User extends BaseUser
      */
     private $livraisonUser;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CommandeOrder", mappedBy="user")
+     */
+    private $commandeOrders;
+
     public function __construct()
     {
     parent::__construct();
+    $this->commandeOrders = new ArrayCollection();
     $this->paniers = new ArrayCollection();
     // your own logic
     }
@@ -90,6 +96,35 @@ class User extends BaseUser
             $livraisonUser->setUser($newUser);
         }
 
+        return $this;
+    }
+
+    /**
+    * @return Collection|CommandeOrder[]
+    */
+    public function getCommandeOrders(): Collection
+    {
+        return $this->commandeOrders;
+    }
+
+    public function addCommandeOrder(CommandeOrder $commandeOrder): self
+    {
+        if (!$this->commandeOrders->contains($commandeOrder)) {
+            $this->commandeOrders[] = $commandeOrder;
+            $commandeOrder->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeCommandeOrder(CommandeOrder $commandeOrder): self
+    {
+        if ($this->commandeOrders->contains($commandeOrder)) {
+            $this->commandeOrders->removeElement($commandeOrder);
+            // set the owning side to null (unless already changed)
+            if ($commandeOrder->getUser() === $this) {
+                $commandeOrder->setUser(null);
+            }
+        }
         return $this;
     }
 }

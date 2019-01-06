@@ -1,0 +1,14 @@
+easy_admin:
+   entities:
+       LivraisonUser :
+          disabled_actions: ['new', 'edit', 'delete', 'list']
+          class: App\Entity\LivraisonUser
+          label: "Adresse de livraison d'un utilisateur"
+          show:
+              title: "Visualisation d'adresse de livraison"
+              fields:
+                  - { property: 'user', label: 'Utilisateur lié' }
+                  - { property: 'adresse', label: 'Adresse' }
+                  - { property: 'ville', label: 'Ville' }
+                  - { property: 'codePostal', label: 'Code postal' }
+                  - { property: 'pays', label: 'Pays' }

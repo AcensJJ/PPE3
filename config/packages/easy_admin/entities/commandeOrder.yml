@@ -1,0 +1,39 @@
+easy_admin:
+   entities:
+       CommandeOrder :
+          disabled_actions: ['new', 'delete']
+          class: App\Entity\CommandeOrder
+          label: 'Commandes'
+          show:
+              title: 'Visualisation de commande [N°%%entity_id%%]'
+              fields:
+                #   - { type: 'section', label: 'Info commande' }
+                  - { property: 'user', label: 'Client' }
+                  - { property: 'reference', label: 'Référence' }
+                  - { property: 'status', label: 'Statut' }
+                  - { property: 'date', label: 'Créee le' }
+                  - { property: 'commentaire', label: 'Commentaire' }
+                #   - { type: 'section', label: 'Article(s) commandé(s)' }
+                  - { property: 'lignesArticle', label: "Articles" }
+                #   - { type: 'section', label: 'Info administratif' }
+                  - { property: 'modeLivraison.title', label: 'Mode de livraison' }
+                  - { property: 'livraisonOrder', label: 'Adresse de livraison' }
+                  - { property: 'identityOrder', label: 'Informations identitaire' }
+                  - { property: 'paymentOrder', label: 'Informations sur le paiement' }
+          edit:
+              title: 'Edition de commande [N°%%entity_id%%]'
+              fields:
+                  - { type: 'tab' , label: 'Infos commande', icon: 'user' }
+                  - { property: 'status', label: 'Statut', type: 'choice', type_options: { multiple: false, choices: { 'Annulée': 'Annulée', 'En attente': 'En attente', 'Traitement en cours': 'Traitement en cours', 'Finalisée': 'Finalisée' } } }
+                #   - { property: 'commentaire', label: 'Commentaire', type_options: { required: false } }
+                  - { type: 'tab' , label: 'Infos administratives', icon: 'user' }
+                  - { property: 'modeLivraison', label: 'Mode de livraison' }
+          list:
+              max_results: 5
+              sort: ['date', 'DESC']
+              title: "Liste des %%entity_label%%"
+              fields:
+                  - { property: 'reference', label: 'Référence' }
+                  - { property: 'status', label: 'Statut' }
+                  - { property: 'lignesArticle', label: "Nb d'articles" }
+                  - { property: 'user', label: 'Client' }

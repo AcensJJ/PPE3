@@ -1,0 +1,26 @@
+easy_admin:
+   entities:
+       Article :
+          class: App\Entity\Produit
+          label: 'Articles'
+          form:
+              title: 'Ajouter/Editer un article'
+              fields:
+                  - { type: 'section', label: 'Informations principales' }
+                  - { property: 'titre', label: 'Titre' }
+                  - { property: 'content', label: 'Description' }
+                  - { type: 'divider' }
+                  - { property: 'categorieProduit', label: 'Catégorie', type_options: { class: 'App\Entity\Category' } }
+                  - { property: 'prix', label: 'Prix', type: 'money', type_options: { currency: 'EUR' } }
+                  - { type: 'divider' }
+
+          list:
+              sort: ['id', 'DESC']
+              title: "Liste des %%entity_label%%"
+
+              fields:
+                  - { property: 'titre', label: 'Titre' }
+                  - { property: 'prix', label: 'Prix'}
+                  - { property: 'categorie.title', label: 'Catégorie' }
+          search:
+            fields: ['titre']

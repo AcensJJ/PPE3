@@ -59,7 +59,7 @@ class ProduitFixtures extends Fixture
         $manager->persist($veste);
       }
 
-      for($i=1;$i<=3 ;$i++){
+      for($i=1;$i<=2 ;$i++){
 
         $pantalon=new Produit;
         $cate = $this->getReference('Pantalon');
@@ -71,7 +71,17 @@ class ProduitFixtures extends Fixture
         $manager->persist($pantalon);
       }
 
+    $pantalon3=new Produit;
+    $cate = $this->getReference('Pantalon');
+    $pantalon3->setTitre("Pantalon Collection n°3")
+              ->setDescription("Edition Speciale")
+              ->setImage("https://ol-boutique-cdn-3.azureedge.net/16780-home_default/pantalon-34-entrainement-olympique-lyonnais-adulte-noir-20182019.jpg")
+              ->setPrix("103")
+              ->setCategorieProduit($cate);          
+    $manager->persist($pantalon3);
+  
+    $manager->flush();
 
-        $manager->flush();
+    $this->addReference('pantalon', $pantalon3);
     }
 }

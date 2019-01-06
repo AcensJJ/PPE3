@@ -1,0 +1,14 @@
+easy_admin:
+   entities:
+       LivraisonOrder :
+          disabled_actions: ['new', 'edit', 'delete', 'list']
+          class: App\Entity\LivraisonOrder
+          label: 'Adresses de livraison des commandes'
+          show:
+              title: "Visualisation d'adresse de livraison"
+              fields:
+                  - { property: 'commandeOrder', label: 'Commande liée' }
+                  - { property: 'adresse', label: 'Adresse' }
+                  - { property: 'ville', label: 'Ville' }
+                  - { property: 'codePostal', label: 'Code postal' }
+                  - { property: 'pays', label: 'Pays' }

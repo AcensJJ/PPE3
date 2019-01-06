@@ -1,0 +1,14 @@
+easy_admin:
+   entities:
+       IdentityOrder :
+          disabled_actions: ['new', 'edit', 'delete', 'list']
+          class: App\Entity\IdentityOrder
+          label: "Informations identitaire de l'utilisateur"
+          show:
+              title: "Visualisation des informations identitaire"
+              fields:
+                  - { property: 'prenom', label: 'Prenom' }
+                  - { property: 'nom', label: "Nom" }
+                  - { property: 'email', label: 'Adresse email' }
+                  - { property: 'numTel', label: 'Téléphone' }
+                  - { property: 'commandeOrder', label: 'Commande liée' }

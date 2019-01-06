@@ -23,5 +23,8 @@ class ModeLivraisonFixtures extends Fixture
         $manager->persist($fast);
 
         $manager->flush();
+
+        $this->addReference('free', $free);
+        $this->addReference('fast', $fast);
     }
 }

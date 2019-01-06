@@ -1,0 +1,13 @@
+imports:
+    - { resource: easy_admin/ }
+
+easy_admin:
+   list:
+        max_results: 10
+        actions:
+            - { name: 'show', icon: 'search', label: '', title: 'Search' }
+            - { name: 'edit', icon: 'pencil', label: '', title: 'Edit' }
+   formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y à H:i'

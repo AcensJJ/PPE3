@@ -1,0 +1,15 @@
+easy_admin:
+   entities:
+       PaymentOrder :
+          disabled_actions: ['new', 'edit', 'delete', 'list']
+          class: App\Entity\PaymentOrder
+          label: "Informations du paiement d'une commande"
+          show:
+              title: "Visualisation des informations de paiement"
+              fields:
+                  - { property: 'paymentId', label: 'Id du paiement' }
+                  - { property: 'status', label: 'Status' }
+                  - { property: 'amount', label: "Coût de la transaction" }
+                  - { property: 'currency', label: 'Devise' }
+                  - { property: 'payerPaypalEmail', label: 'Email paypal du client' }
+                  - { property: 'commandeOrder', label: 'Commande liée' }

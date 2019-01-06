@@ -1,0 +1,14 @@
+easy_admin:
+   entities:
+       IdentityUser :
+          disabled_actions: ['new', 'edit', 'delete', 'list']
+          class: App\Entity\IdentityUser
+          label: "Informations identitaire de l'utilisateur"
+          show:
+              title: "Visualisation des informations identitaire"
+              fields:
+                  - { property: 'user', label: 'Utilisateur lié' }
+                  - { property: 'prenom', label: 'Prenom' }
+                  - { property: 'nom', label: "Nom" }
+                  - { property: 'email', label: 'Adresse email' }
+   

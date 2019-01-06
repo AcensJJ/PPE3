@@ -255,7 +255,6 @@ class PaypalController extends AbstractController
         $paymentOrder->setCurrency("EUR");
         $paymentOrder->setCreatedAt(\DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s')));
         $manager->persist($paymentOrder);
-        $manager->flush();
     
         //Création IdentityOrder
         $identityOrder = new IdentityOrder();

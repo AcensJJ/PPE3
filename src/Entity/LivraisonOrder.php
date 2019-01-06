@@ -19,16 +19,6 @@ class LivraisonOrder
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateLivraison;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateEnvoie;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $adresse;
@@ -51,30 +41,6 @@ class LivraisonOrder
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDateLivraison(): ?\DateTimeInterface
-    {
-        return $this->dateLivraison;
-    }
-
-    public function setDateLivraison(?\DateTimeInterface $dateLivraison): self
-    {
-        $this->dateLivraison = $dateLivraison;
-
-        return $this;
-    }
-
-    public function getDateEnvoie(): ?\DateTimeInterface
-    {
-        return $this->dateEnvoie;
-    }
-
-    public function setDateEnvoie(?\DateTimeInterface $dateEnvoie): self
-    {
-        $this->dateEnvoie = $dateEnvoie;
-
-        return $this;
     }
 
     public function getAdresse(): ?string
