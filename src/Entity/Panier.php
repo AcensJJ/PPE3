@@ -26,9 +26,10 @@ class Panier
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Produit", mappedBy="panier")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Produit", inversedBy="paniers")
      */
     private $articles;
+
 
     public function __construct()
     {
@@ -59,7 +60,6 @@ class Panier
     {
         if (!$this->articles->contains($article)) {
             $this->articles[] = $article;
-            $article->setPanier($this);
         }
 
         return $this;
@@ -69,13 +69,11 @@ class Panier
     {
         if ($this->articles->contains($article)) {
             $this->articles->removeElement($article);
-            // set the owning side to null (unless already changed)
-            if ($article->getPanier() === $this) {
-                $article->setPanier(null);
-            }
         }
 
         return $this;
     }
+
+    
 
 }

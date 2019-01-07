@@ -44,24 +44,24 @@ class Produit
     private $categorieProduit;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Panier", inversedBy="articles")
-     */
-    private $panier;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\CommandeOrder", mappedBy="produit")
      */
     private $commandeOrders;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Panier", mappedBy="articles")
+     */
+    private $paniers;
+
     public function __construct()
     {
         $this->userId = new ArrayCollection();
-        $this->paniers = new ArrayCollection();
         $this->commandeOrders = new ArrayCollection();
+        $this->paniers = new ArrayCollection();
     }
 
     public function __toString() {
-        return (string) "Articles";
+        return (string) "Article";
     }
 
     public function getId(): ?int
@@ -129,18 +129,6 @@ class Produit
         return $this;
     }
 
-    public function getPanier(): ?Panier
-    {
-        return $this->panier;
-    }
-
-    public function setPanier(?Panier $panier): self
-    {
-        $this->panier = $panier;
-
-        return $this;
-    }
-
     /**
      * @return Collection|CommandeOrder[]
      */
@@ -164,6 +152,34 @@ class Produit
         if ($this->commandeOrders->contains($commandeOrder)) {
             $this->commandeOrders->removeElement($commandeOrder);
             $commandeOrder->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Panier[]
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): self
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers[] = $panier;
+            $panier->addArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): self
+    {
+        if ($this->paniers->contains($panier)) {
+            $this->paniers->removeElement($panier);
+            $panier->removeArticle($this);
         }
 
         return $this;
