@@ -49,15 +49,19 @@ class Produit
     private $panier;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CommandeOrder", inversedBy="article")
+     * @ORM\ManyToMany(targetEntity="App\Entity\CommandeOrder", mappedBy="produit")
      */
-    private $commandeOrder;
+    private $commandeOrders;
 
     public function __construct()
     {
         $this->userId = new ArrayCollection();
         $this->paniers = new ArrayCollection();
-        $this->commande = new ArrayCollection();
+        $this->commandeOrders = new ArrayCollection();
+    }
+
+    public function __toString() {
+        return (string) "Articles";
     }
 
     public function getId(): ?int
@@ -137,16 +141,33 @@ class Produit
         return $this;
     }
 
-    public function getCommandeOrder(): ?CommandeOrder
+    /**
+     * @return Collection|CommandeOrder[]
+     */
+    public function getCommandeOrders(): Collection
     {
-        return $this->commandeOrder;
+        return $this->commandeOrders;
     }
 
-    public function setCommandeOrder(?CommandeOrder $commandeOrder): self
+    public function addCommandeOrder(CommandeOrder $commandeOrder): self
     {
-        $this->commandeOrder = $commandeOrder;
+        if (!$this->commandeOrders->contains($commandeOrder)) {
+            $this->commandeOrders[] = $commandeOrder;
+            $commandeOrder->addProduit($this);
+        }
 
         return $this;
     }
 
+    public function removeCommandeOrder(CommandeOrder $commandeOrder): self
+    {
+        if ($this->commandeOrders->contains($commandeOrder)) {
+            $this->commandeOrders->removeElement($commandeOrder);
+            $commandeOrder->removeProduit($this);
+        }
+
+        return $this;
+    }
+
+  
 }

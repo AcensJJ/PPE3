@@ -83,5 +83,6 @@ class ProduitFixtures extends Fixture
     $manager->flush();
 
     $this->addReference('pantalon', $pantalon3);
+    $this->addReference('pantalon2', $pantalon);
     }
 }

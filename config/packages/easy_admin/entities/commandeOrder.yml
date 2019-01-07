@@ -12,7 +12,7 @@ easy_admin:
                   - { property: 'status', label: 'Statut' }
                   - { property: 'date', label: 'Créee le' }
                   - { property: 'commentaire', label: 'Commentaire' }
-                  - { property: 'article', label: "Articles" }
+                  - { property: 'produit', label: "Articles" }
                   - { property: 'livraison', label: 'Adresse de livraison' }
                   - { property: 'identity', label: 'Informations identitaire' }
                   - { property: 'paymentOrder', label: 'Informations sur le paiement' }
@@ -28,5 +28,5 @@ easy_admin:
               fields:
                   - { property: 'reference', label: 'Référence' }
                   - { property: 'status', label: 'Statut' }
-                  - { property: 'article', label: "Les articles" }
+                  - { property: 'date', label: 'Créee le' }
                   - { property: 'user', label: 'Client' }

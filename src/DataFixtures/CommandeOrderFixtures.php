@@ -52,6 +52,7 @@ class CommandeOrderFixtures extends Fixture implements DependentFixtureInterface
 
             $user = $this->getReference('admin');
             $produit = $this->getReference('pantalon');
+            $produit2 = $this->getReference('pantalon2');
             $modeLivraison = $this->getReference('free');
             $commande = new CommandeOrder();
             $commande->setReference($reference)
@@ -62,7 +63,8 @@ class CommandeOrderFixtures extends Fixture implements DependentFixtureInterface
                         ->setIdentity($identityOrder)
                         ->setPaymentOrder($paymentOrder)
                         ->setModeLivraison($modeLivraison)
-                        ->addArticle($produit);
+                        ->addProduit($produit)
+                        ->addProduit($produit2);
             
             $manager->persist($commande);
             }
