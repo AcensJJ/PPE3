@@ -59,7 +59,7 @@
             <li> <a href="{{ path('historique') }}">Mes commandes</a></li>
               <li> <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
             {% else %}
-              <li><a href=" path('inscription') ">Inscription</a></li>
+              <li><a href="{{ path('inscription') }}">Inscription</a></li>
               <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
             {% endif %}
             <li><a href="{{ path('panier') }}"><i class='fa fa-shopping-cart' style='font-size:36px'></i></a></li>
