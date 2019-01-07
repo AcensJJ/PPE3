@@ -191,7 +191,7 @@ class PaypalController extends AbstractController
                     $articlesPanier = $thisPanier->getArticles();
                     foreach ($articlesPanier as $article) {
                         // ajouter les articles du panier à la commande
-                        $commande->addArticle($article);
+                        $commande->addProduit($article);
                         // vider le panier
                         $thisPanier->removeArticle($article);
                         $manager->persist($thisPanier);
