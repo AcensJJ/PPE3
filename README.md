@@ -1,6 +1,6 @@
 # PPE3
 
-PPE 3 est un site vitrine d'une boutique en ligne (e-commerce), il a était realisé à l'aide du Framework Symfony 4.
+PPE 3 est un site vitrine d'une boutique en ligne (e-commerce), il a était réalisé à l'aide du Framework Symfony 4.
 ![image](https://user-images.githubusercontent.com/45235527/96744438-532ee780-13c5-11eb-9cbd-46b79fc5dd3a.png)
 
 # Documentation
