@@ -5,8 +5,7 @@ PPE 3 est un site vitrine d'une boutique en ligne (e-commerce), il a était réa
 
 # Documentation
 
-Configuration du projet :
-https://drive.google.com/drive/u/1/folders/1xqqPGdK0tdXMloBUKBLYYGn4T4TOmFUr
+Configuration du projet : <a href="https://drive.google.com/file/d/1hEvdeTFaUARG0PUgI91X9p1ww5X0OiR-/view?usp=sharing">Tutoriel</a>
 
 # resultat :
 
