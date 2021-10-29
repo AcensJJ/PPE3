@@ -32,7 +32,7 @@ Installation
 http://127.0.0.1:8000
 
 
-# resultat :
+# Results
 
 ![ppe3-1](https://user-images.githubusercontent.com/45235527/96742800-938d6600-13c3-11eb-998a-874680b5f667.PNG)
 
